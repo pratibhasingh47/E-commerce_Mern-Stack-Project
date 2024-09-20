@@ -4,18 +4,38 @@ const Signup = () => {
     return (
         // <div>Signup</div>
 
-        <div>
+        <div className='w-80 h-auto bg-violet-300 m-5 p-5 rounded' >
             <div>
-                <p>Sign-Up</p>
+                <p className='text-4xl'>Sign-Up</p>
                 <p>Create a free account with your email !</p>
             </div>
+            <form action="">
+                <div>
+                    <label htmlFor="">Name</label>
+                    <input type="text" name="" id="" />
+                </div>
+                <div>
+                    <label htmlFor="">Email</label>
+                    <input type="text" name="" id="" />
+                </div>
+                <div>
+                    <label htmlFor="">Password</label>
+                    <input type="text" name="" id="" />
+                </div>
+                <div>
+                    <label htmlFor="">Phone Number</label>
+                    <input type="text" name="" id="" />
+                </div>
+            </form>
         </div>
 
 
 
 
         // <div class="w-96 rounded-lg bg-gray-900 p-8 text-gray-100">
+
         //     <p class="text-center text-xl font-bold">Sign-Up</p>
+
         //     <form class="mt-6">
         //         <div class="mt-1 text-sm">
         //             <label for="username" class="block text-gray-400 mb-1">Username</label>
