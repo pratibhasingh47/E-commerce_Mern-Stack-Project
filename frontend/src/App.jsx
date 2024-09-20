@@ -6,7 +6,7 @@ function App() {
 
 	return (
 		<>
-			<div >
+			<div className='w-screen h-screen m-0 p-0 flex items-center justify-center' >
 				<RouterProvider router={Router} />
 			</div>
 		</>
