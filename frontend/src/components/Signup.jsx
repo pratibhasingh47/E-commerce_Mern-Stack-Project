@@ -4,29 +4,30 @@ const Signup = () => {
     return (
         // <div>Signup</div>
 
-        <div className='w-80 h-auto bg-violet-300 m-5 p-5 rounded' >
+        <div className='w-3/12 h-auto bg-violet-300 m-5 p-5 rounded flex flex-col justify-center items-center' >
             <div>
-                <p className='text-4xl'>Sign-Up</p>
-                <p>Create a free account with your email !</p>
+                <p className='text-4xl font-lato font-bold text-center pb-3'>Sign-Up</p>
+                <p className='text-2xl font-lato pb-3 mb-3 text-center'>Create a free account with your email !</p>
             </div>
-            <form action="">
-                <div>
-                    <label htmlFor="">Name</label>
-                    <input type="text" name="" id="" />
+            <form action="" className='flex flex-col justify-center w-3/4'>
+                <div className='flex-col'>
+                    <label htmlFor="" className='text-xl font-lato font-light '>Name</label>
+                    <input type="text" className='p-2 w-[100%] mt-0 rounded mb-3' />
                 </div>
                 <div>
-                    <label htmlFor="">Email</label>
-                    <input type="text" name="" id="" />
+                    <label htmlFor="" className='text-xl pr-4 font-lato font-light'>Email</label>
+                    <input type="text" className='p-2 w-[100%] mt-0 rounded mb-3'  />
                 </div>
                 <div>
-                    <label htmlFor="">Password</label>
-                    <input type="text" name="" id="" />
+                    <label htmlFor="" className='text-xl font-lato font-light'>Password</label>
+                    <input type="text " className='p-2 w-[100%] mt-0 rounded mb-3'  />
                 </div>
                 <div>
-                    <label htmlFor="">Phone Number</label>
-                    <input type="text" name="" id="" />
+                    <label htmlFor="" className='text-xl font-lato font-light'>Phone Number</label>
+                    <input type="text" className='p-2 w-[100%] mt-0 rounded mb-3'  />
                 </div>
             </form>
+            <button className='py-2 px-5 bg-violet-950	rounded  text-white font-lato font-bold text-xl mt-5'>Sign-Up</button>
         </div>
 
 
