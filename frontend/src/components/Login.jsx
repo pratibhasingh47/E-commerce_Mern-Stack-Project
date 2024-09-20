@@ -6,16 +6,16 @@ import { z } from 'zod';
 const Login = () => {
 
     const validationSchema = z.object({
-        "email" : z.string().min(1,"Email is required").email("Invalid Email"),
-        "password" : z.string()
-                .min(8,"Password must be of at least 8 letters")
+        "email": z.string().min(1, "Email is required").email("Invalid Email"),
+        "password": z.string()
+            .min(8, "Password must be of at least 8 letters")
     })
 
-    const { register , handleSubmit , formState : {errors}} = useForm({
-        resolver : zodResolver(validationSchema)
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: zodResolver(validationSchema)
     })
 
-    const onSubmit = (data) =>{
+    const onSubmit = (data) => {
         console.log(data);
     }
 
@@ -41,10 +41,10 @@ const Login = () => {
                 <div>
                     <label htmlFor="" className='text-lg pr-4 font-lato font-light'>Email</label>
                     {/* <input type="text" className='p-2 w-[100%] mt-0 rounded mb-3 outline-none ' /> */}
-                    <input type="text" className={`p-2 w-[100%] mt-0 rounded outline-none ${errors.email ? "border-red-500 outline-none" : "outline-none"}`} {...register("email")}  />
+                    <input type="text" className={`p-2 w-[100%] mt-0 rounded outline-none ${errors.email ? "border-red-500 outline-none" : "outline-none"}`} {...register("email")} />
                     {errors.email && (
-                            <p className='text-xs text-red-500'>{errors.email.message}</p>
-                        ) }
+                        <p className='text-xs text-red-500'>{errors.email.message}</p>
+                    )}
                 </div>
 
                 <div>
@@ -52,8 +52,8 @@ const Login = () => {
                     {/* <input type="text " className='p-2 w-[100%] mt-0 rounded mb-3 outline-none ' /> */}
                     <input type="text " className={`p-2 w-[100%] mt-0 rounded outline-none  ${errors.password ? "border-red-500 outline-none" : "outline-none"}`} {...register("password")} />
                     {errors.password && (
-                            <p className='text-xs text-red-500'>{errors.password.message}</p>
-                        ) }
+                        <p className='text-xs text-red-500'>{errors.password.message}</p>
+                    )}
                 </div>
 
                 {/* <div>
@@ -64,7 +64,7 @@ const Login = () => {
                             <p className='text-xs text-red-500'>{errors.phoneNumber.message}</p>
                         ) }
                 </div> */}
-            <button className='py-2 px-5 w-[40%] bg-violet-950 rounded font-lato font-bold text-xl mt-5 hover:bg-black text-white'>Log-In</button>
+                <button className='py-2 px-5 w-[40%] bg-violet-950 rounded font-lato font-bold text-xl mt-5 hover:bg-black text-white'>Log-In</button>
             </form>
             <p className='mt-5 font-lato text-left w-[75%] text-sm'>Don't have an account? <a className='underline decoration-solid' href="">Sign-Up Here!</a></p>
         </div>
