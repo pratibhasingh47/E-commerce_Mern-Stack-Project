@@ -5,16 +5,16 @@ import Login from '../components/Login'
 
 const Router = createBrowserRouter([
     {
-        path : "/signup",
-        element : <Signup />
+        path: "/signup",
+        element: <Signup />
     },
     {
-        path : "/login",
-        element : <Login />
+        path: "/login",
+        element: <Login />
     },
     {
-        path : "*",
-        element : <Navigate to="/signup" />
+        path: "*",
+        element: <Navigate to="/signup" />
     }
 ])
 
