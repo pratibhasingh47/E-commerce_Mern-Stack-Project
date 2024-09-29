@@ -6,7 +6,7 @@ import { loginWithGoogle } from '../../redux/slices/authSlice';
 
 const GoogleAuth = () => {
 
-    const dispatch  = useDispatch();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,10 +22,10 @@ const GoogleAuth = () => {
             dispatch(loginWithGoogle(user));
             navigate("/");
         }
-        else{
+        else {
             navigate("/login");
         }
-    } , [dispatch,navigate]);
+    }, [dispatch, navigate]);
 
     return (
         <div>GoogleAuth</div>

@@ -17,7 +17,7 @@ const Home = () => {
 	}
 	return (
 		<div>
-			<Carousel  />
+			<Carousel />
 			<div className='w-[90%]  mx-auto'>
 				<div className='grid grid-cols-5  gap-8  font-sans'>
 					{products.map((item, i) => (
