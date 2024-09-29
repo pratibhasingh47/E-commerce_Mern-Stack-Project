@@ -35,7 +35,7 @@ const Login = () => {
         navigate('/signup'); // Navigate to login route when 'Login Here' is clicked
     };
 
-    const handleGoogleLogin = ()=>{
+    const handleGoogleLogin = () => {
         window.location.href = "http://localhost:5000/api/auth/google";
     }
 

@@ -41,7 +41,7 @@ const Navbar = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
 
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false); 
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
 
     const categories = [
@@ -100,7 +100,7 @@ const Navbar = () => {
             },
             ...theme.applyStyles('dark', {
                 backgroundColor: '#003892',
-            }), 
+            }),
         },
         '& .MuiSwitch-track': {
             opacity: 1,
@@ -116,7 +116,7 @@ const Navbar = () => {
         <div className={`navbar_header ${theme}`}>
             <div className='navbar_logo'>
                 <Link to="/">
-                <img src={theme === 'dark' ? logo : logo_light} alt="Logo" />
+                    <img src={theme === 'dark' ? logo : logo_light} alt="Logo" />
                 </Link>
             </div>
             {/* <div className='search_box'>
@@ -155,30 +155,30 @@ const Navbar = () => {
                                 (
                                     <div className='menu-items'>
 
-                                        <Link  className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/cart"><GrCart className='icons' />Cart</Link>
-                                        <Link  className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/myorder"> <AiTwotoneCarryOut className='icons' /> My-Orders</Link>
-                                        <Link  className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/profile"> <FaUser className='icons' /> Profile</Link>
+                                        <Link className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/cart"><GrCart className='icons' />Cart</Link>
+                                        <Link className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/myorder"> <AiTwotoneCarryOut className='icons' /> My-Orders</Link>
+                                        <Link className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/profile"> <FaUser className='icons' /> Profile</Link>
                                     </div>
                                 )
                                 :
                                 (
                                     <div className='menu-items-admin'>
-                                        <Link  className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/dashboard"> <MdDashboard className='icons' />Dashboard</Link>
-                                        <Link  className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/adminUser"> <RiAdminFill className='icons' />Users</Link>
-                                        <Link  className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/adminProduct"> <MdProductionQuantityLimits className='icons' />
+                                        <Link className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/dashboard"> <MdDashboard className='icons' />Dashboard</Link>
+                                        <Link className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/adminUser"> <RiAdminFill className='icons' />Users</Link>
+                                        <Link className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/adminProduct"> <MdProductionQuantityLimits className='icons' />
                                             Products</Link>
-                                        <Link  className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/adminOrder"> <AiFillShopping className='icons' />Orders</Link>
-                                        <Link  className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/profile"> <FaUser className='icons' /> Profile</Link>
+                                        <Link className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/adminOrder"> <AiFillShopping className='icons' />Orders</Link>
+                                        <Link className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/profile"> <FaUser className='icons' /> Profile</Link>
                                     </div>
                                 )
                         )
                         :
                         (
                             <div className='menu-items'>
-                                <Link  className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/cart"> <GrCart className='icons' /> Cart</Link>
-                                <Link  className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/login"> <FaUserCheck className='icons' />
+                                <Link className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/cart"> <GrCart className='icons' /> Cart</Link>
+                                <Link className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/login"> <FaUserCheck className='icons' />
                                     Login</Link>
-                                <Link  className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/signup"><HiMiniUserPlus className='icons' />
+                                <Link className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/signup"><HiMiniUserPlus className='icons' />
                                     Signup</Link>
                             </div>
                         )
@@ -194,7 +194,7 @@ const Navbar = () => {
                 <div className="logout_button">
 
                     {isAuth && (
-                        <button className={`logout ${theme === 'dark' ? 'dark-button' : 'light-button'}`}  onClick={handleLogOut}><FiLogOut /><p>Logout</p></button>
+                        <button className={`logout ${theme === 'dark' ? 'dark-button' : 'light-button'}`} onClick={handleLogOut}><FiLogOut /><p>Logout</p></button>
 
                     )}
                 </div>
