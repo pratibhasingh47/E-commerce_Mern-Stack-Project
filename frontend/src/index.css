@@ -1,3 +1,44 @@
+/* src/styles/index.css */
+@font-face {
+    font-family: 'Lato';
+    src: url('../fonts/Lato-Regular.woff2') format('woff2'),
+        url('../fonts/Lato-Regular.woff') format('woff');
+    font-weight: 400;
+    /* Normal */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Lato';
+    src: url('../fonts/Lato-Bold.woff2') format('woff2'),
+        url('../fonts/Lato-Bold.woff') format('woff');
+    font-weight: 700;
+    /* Bold */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Lato';
+    src: url('../fonts/Lato-Italic.woff2') format('woff2'),
+        url('../fonts/Lato-Italic.woff') format('woff');
+    font-weight: 400;
+    /* Normal */
+    font-style: italic;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body.light-theme {
+    /* background-color: rgba(234, 222, 255, 0.74); */
+    background-color: #F5F5F5;
+    color: black;
+}
+
+body.dark-theme {
+    /* background-color: #121212; */
+    /* background-color: #001222cb; */
+    background-color: #001222e8;
+    color: white;
+}

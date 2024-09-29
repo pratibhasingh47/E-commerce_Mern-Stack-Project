@@ -1,16 +1,15 @@
-// tailwind.config.js
-module.exports = {
+/** @type {import('tailwindcss').Config} */
+export default {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}", // Adjust paths if necessary
+    "./index.html",
+    "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
       fontFamily: {
-        lato: ['Lato', 'sans-serif'], // Define Lato font
+        'lato': ['Lato', 'sans-serif'], // Add Lato to your theme
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-  ],
-};
+  plugins: [],
+}

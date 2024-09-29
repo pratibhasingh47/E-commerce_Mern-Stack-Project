@@ -1,65 +1,52 @@
 const User = require("../model/user");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
-exports.signup = async (req, res , next) => {
+exports.signup = async (req,res , next)=>{
     try {
-        const { name, email, password, phoneNumber } = req.body;
-        const isExisting = await User.findOne({ email: email });
-        if (isExisting) {
-            // res.status(400).send({ message: "User already exists" });
-            const error = new Error("User Already Exist");
-            error.name = "existingUserError";
+        const { name , email , password , phoneNumber , role } = req.body;
+        const isExisting = await User.findOne({email : email});
+        if(isExisting){
+            const error = new Error("User already exist")
+            error.name = "ExistingUserError";
             error.statusCode = 400;
             throw error;
-        }
+        };
 
         // const hashedPassword = await bcrypt.hash(password , 10);
-
-        const newUser = new User({ name: name, email: email, password: password, phoneNumber: phoneNumber });
-
+        const newUser = new User({name : name , email : email , password : password , phoneNumber  : phoneNumber , role});
+        console.log("hello");
         await newUser.save();
-        res.status(201).send({ message: "Account created" });
-
+        res.status(201).send({message : "Account created" , data : newUser});
     } catch (error) {
-
-        next(error)
-        // if (error.name === "ValidationError") {
-        //     const errors = Object.values(error.errors).map(error => error.message);
-        //     return res.status(400).json({ message: "Validation Error", error: errors });
-        // }
-        // console.log(error.name);
-        // res.status(500).send(error);
+        next(error);
     }
-}
+};
 
 
-exports.login = async (req,res,next) =>{
+exports.login = async (req,res,next)=>{
     try {
-        const { email , password} = req.body;
-        const isExisting = await User.findOne( {email : email});
+        const { email , password } = req.body;
+        const isExisting = await User.findOne({email : email});
 
-        if( ! isExisting){
-            // return res.status(404).send({message : "User not found"});
-            const error = new Error("User Not Found");
-            // error.name = "UserNotFound";
+        if(!isExisting){
+            const error = new Error("User not found");
             error.statusCode = 404;
             throw error;
         };
 
-        const isMatched = await bcrypt.compare(password,isExisting.password);
-        // const isMatched = password === isExisting.password;
+        const isMatched = await bcrypt.compare(password , isExisting.password);
 
         if(!isMatched){
-            // return res.status(401).send({message : "Password not matched"})
-            const error = new Error("Password not matched");
-            // error.name = "UserNotFound";
+            const error = new Error("Invalid Password");
             error.statusCode = 401;
             throw error;
         }
 
-        res.status(200).send({message : "User loged-in" , data : isExisting})
+        const token = jwt.sign({id : isExisting._id , email : isExisting.email ,  role :  isExisting.role},process.env.JWT_SECRET,{expiresIn : "1h"});
+        res.status(200).send({message : "User Logged-In" , data : isExisting  ,  token : token});
+ 
     } catch (error) {
-        // res.send(500).send(error);
         next(error);
     }
 }

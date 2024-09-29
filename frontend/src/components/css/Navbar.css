@@ -1,0 +1,100 @@
+.navbar_header{
+    height: auto; display: flex; justify-content: space-between; align-items: center;width: auto; background-color:#0f1111;padding: 1.5rem; background-color: #232f3e;
+}
+.navbar_logo{
+    height: 40px;width: auto;
+}
+.navbar_logo img{
+    width: 100%;height: 100%;
+}
+.search_box{
+    width: 50vw; display: flex;align-items: stretch;justify-content: center;height: 50px;
+}
+.navbar_search{
+    padding: 10px 20px; width: 70%; font-size: 1.2rem; outline: none;  border: 1px solid gray
+}
+.search_icon{
+    font-size: 2rem; color: #0f1111; background-color: rgb(247, 191, 191); height: 100%; padding: 0 10px 0 10px; border-radius: 0 5px 5px 0; width: 50px;
+}
+.navbar_menu{
+    display: flex;align-items: center;gap: 2.5rem;
+    /* 0d1117 */
+}
+.menu-items{ 
+    display: flex; align-items: center; gap: 3rem; font-size: 1.5rem;
+}
+.menu-items-admin{
+    display: flex; align-items: center; gap: 2rem; font-size: 1.2rem;
+}
+.logout{
+    color: white; font-size: 1.5rem; background: transparent; outline: none; border: none;
+}
+.navbar_link{
+    display: flex;align-items: center;justify-content: center; flex-direction: column; font-size: 1.2rem; color: black;text-decoration: none;font-family: "Lato", sans-serif; margin-top: 15px;
+}
+.light-link {
+    color: #000; /* Light theme link color */
+}
+
+.dark-link {
+    color: #fff; /* Dark theme link color */
+}
+.icons{
+    font-size: 1.5rem;
+}
+.logout_button{
+    display: flex;flex-direction: column;justify-content: center;align-items: center;
+}
+.logout_button p{
+    margin: 0; padding: 0; font-family: "Lato", sans-serif; font-size: 1rem; font-weight: 600;
+}
+.light-button {
+    color: #000; 
+}
+.dark-button {
+    color: #fff; 
+}
+.navbar_header.light {
+    background-color: #fff; 
+    color: #000000; 
+}
+.navbar_header.dark {
+    /* background-color: #1a1818; */
+    background-color: #0b0b0b;
+    color: #fff;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+    height: auto;
+}
+
+.dropdown-toggle {
+    background-color: #fff;
+    color: #000000;
+    padding: 10px;
+    height: 100%;
+    font-size: 16px;
+    border: 1px solid gray;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    display: block;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-item {
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    color: #0f1111;
+}
+
+.dropdown-item:hover {
+    background-color: #f1f1f1;
+}
