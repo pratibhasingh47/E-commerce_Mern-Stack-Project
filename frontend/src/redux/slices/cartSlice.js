@@ -4,24 +4,24 @@ import axios from "axios";
 
 
 const initialState = {
-    isLoading : false,
-    error : null,
-    cartItem : JSON.parse(localStorage.getItem("cart")) || [],
+    isLoading: false,
+    error: null,
+    cartItem: JSON.parse(localStorage.getItem("cart")) || [],
 }
 
 const cartSlice = createSlice({
-    name : "cart",
+    name: "cart",
     initialState,
-    reducers : {
-        addToCart : (state,action)=>{
+    reducers: {
+        addToCart: (state, action) => {
             state.cartItem.push(action.payload);
-            localStorage.setItem("cart" , JSON.stringify(state.cartItem))
+            localStorage.setItem("cart", JSON.stringify(state.cartItem))
         }
     },
-    
+
 });
 
-export const { addToCart }  = cartSlice.actions;
+export const { addToCart } = cartSlice.actions;
 
 
 

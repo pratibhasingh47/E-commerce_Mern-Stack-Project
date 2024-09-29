@@ -6,13 +6,13 @@ import store from './redux/store/store';
 import '@fontsource/inter';
 
 const ThemeHandler = () => {
-	const theme = useSelector((state) => state.theme?.theme); // Add optional chaining to prevent undefined access
+	const theme = useSelector((state) => state.theme?.theme); 
 
 	useEffect(() => {
 		document.body.className = theme === 'dark' ? 'dark-theme' : 'light-theme';
 	}, [theme]);
 
-	return null; // No need to render anything
+	return null; 
 };
 
 function App() {
