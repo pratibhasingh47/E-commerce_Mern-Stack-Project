@@ -60,3 +60,48 @@ exports.getAllUsers = async (req,res,next)=>{
         next(error);
     }
 }
+
+exports.getUserProfile = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id); 
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error });
+    }
+};
+
+
+exports.updateUserProfile = async (req, res) => {
+    try {
+        const { firstName, lastName, DOB, gender, profilePicture, additionalPhoneNumber, address } = req.body;
+        const user = await User.findById(req.user.id);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Update user fields
+        user.firstName = firstName || user.firstName;
+        user.lastName = lastName || user.lastName;
+        user.DOB = DOB || user.DOB;
+        user.gender = gender || user.gender;
+        user.profilePicture = profilePicture || user.profilePicture;
+        user.additionalPhoneNumber = additionalPhoneNumber || user.additionalPhoneNumber;
+        user.address = {
+            country: address.country || user.address.country,
+            state: address.state || user.address.state,
+            city: address.city || user.address.city,
+            zipCode: address.zipCode || user.address.zipCode,
+            address1: address.address1 || user.address.address1,
+        };
+
+        await user.save();
+
+        res.json({ message: "Profile updated successfully", user });
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error });
+    }
+};

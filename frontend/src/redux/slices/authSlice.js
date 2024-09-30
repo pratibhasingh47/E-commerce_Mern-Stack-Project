@@ -30,6 +30,21 @@ export const getAllUsers = createAsyncThunk("auth/getAllUsers", async (data, { r
     }
 })
 
+export const updateUser = createAsyncThunk("auth/updateUserProfile", async (updatedData, { rejectWithValue }) => {
+    try {
+        const token = localStorage.getItem("token");
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        const response = await axios.put("http://localhost:5000/auth/updateProfile", updatedData, config);
+        return response.data.data;
+    } catch (error) {
+        return rejectWithValue(error);
+    }
+});
+
 const getRole = () => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -102,7 +117,19 @@ const authSlice = createSlice({
             .addCase(getAllUsers.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
+            })
+            .addCase(updateUser.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(updateUser.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.user = action.payload; // Update the user state with the updated profile
+            })
+            .addCase(updateUser.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
             });
+
     }
 })
 
