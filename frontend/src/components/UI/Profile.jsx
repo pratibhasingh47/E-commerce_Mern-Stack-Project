@@ -10,8 +10,8 @@ const Profile = () => {
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
-        username: "",
-        gender: "",
+        username: "",  
+        gender: "",    
         dob: "",
         email: "",
         phoneNumber: "",
@@ -37,8 +37,8 @@ const Profile = () => {
             setFormData({
                 firstName: user.firstName || "",
                 lastName: user.lastName || "",
-                username: user.username || "",
-                gender: user.gender || "",
+                username: user.username || "", 
+                gender: user.gender || "",      
                 dob: user.dob || "",
                 email: user.email || "",
                 phoneNumber: user.phoneNumber || "",
@@ -126,56 +126,92 @@ const Profile = () => {
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
-        console.log(file); // For now, just log the file
+        console.log(file); 
     };
 
-    return (
-        <div className="p-6 bg-white text-black rounded-lg shadow-lg">
+    return ( 
+
+		<div className="flex justify-center items-center ">
+
+
+        <div className="p-6 mt-8 w-[90%] h-auto  bg-white text-black rounded-lg shadow-lg">
+
             <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-semibold mb-4">Profile</h2>
+                <h2 className="text-3xl font-lato font-bold mb-4">Profile</h2>
             </div>
 
             {isLoading && <p className="text-yellow-500">Loading...</p>}
             {error && <p className="text-red-500">Error: {error}</p>}
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="flex items-center mb-4">
+            <form onSubmit={handleSubmit} className="w-[70%] space-y-4">
+
+                {/* <div className="flex items-center mb-4">
                     <div className="w-16 h-16 border rounded-full overflow-hidden mr-4 flex items-center justify-center">
-                        <img src="" alt="Profile" className="w-full h-full object-cover" />
+					<img src="" alt="Profile" className="w-full h-full object-cover" />
                     </div>
                     <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleFileChange}
-                        className="hidden"
-                        id="upload"
+					type="file"
+					accept="image/*"
+					onChange={handleFileChange}
+					className="hidden"
+					id="upload"
                     />
                     <label htmlFor="upload" className="flex items-center cursor-pointer">
-                        <AiOutlineUpload className="text-gray-500 mr-2" />
-                        Upload Profile Picture
+					<AiOutlineUpload className="text-gray-500 mr-2" />
+					Upload Profile Picture
                     </label>
-                </div>
+					</div> */}
 
-                <div className="flex flex-col">
+                <div className="grid grid-cols-2 gap-1">
+
+				<div className="flex w-[70%] flex-col">
                     <label className="mb-2 font-medium">First Name</label>
                     <input
                         type="text"
                         name="firstName"
                         value={formData.firstName}
                         onChange={handleChange}
-                        className="p-2 rounded border bg-gray-100 text-black"
-                    />
+                        className="p-2 rounded w-full border bg-gray-100 text-black"
+						/>
                 </div>
 
-                <div className="flex flex-col">
+                <div className="flex w-[70%] flex-col">
                     <label className="mb-2 font-medium">Last Name</label>
                     <input
                         type="text"
                         name="lastName"
                         value={formData.lastName}
                         onChange={handleChange}
-                        className="p-2 rounded border bg-gray-100 text-black"
-                    />
+                        className="p-2 rounded  w-full border bg-gray-100 text-black"
+						/>
+                </div>
+
+				</div>
+
+                <div className="flex flex-col">
+                    <label className="mb-2 w-1/5 font-medium">Username</label> {/* Added Username Label */}
+                    <input
+                        type="text"
+                        name="username"  // Added Username Input Field
+                        value={formData.username}
+                        onChange={handleChange}
+                        className="p-2 rounded w-[35%] border bg-gray-100 text-black"
+						/>
+                </div>
+
+                <div className="flex flex-col">
+                    <label className="mb-2 w-1/5 font-medium">Gender</label> {/* Added Gender Label */}
+                    <select
+                        name="gender" // Gender select input
+                        value={formData.gender}
+                        onChange={handleChange}
+                        className="p-2 rounded w-[35%] border bg-gray-100 text-black"
+						>
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
                 </div>
 
                 <div className="flex flex-col">
@@ -185,30 +221,30 @@ const Profile = () => {
                         name="email" 
                         value={formData.email} 
                         disabled 
-                        className="p-2 rounded border bg-gray-100 text-black cursor-not-allowed"
-                    />
+                        className="p-2 w-[75%] rounded border bg-gray-100 text-black cursor-not-allowed"
+						/>
                 </div>
 
                 <div className="flex flex-col">
-                    <label className="mb-2 font-medium">Phone Number</label>
+                    <label className="mb-2 font-medium">Mobile Number 1:</label>
                     <input
                         type="text"
                         name="phoneNumber"
                         value={formData.phoneNumber}
                         onChange={handleChange}
-                        className="p-2 rounded border bg-gray-100 text-black"
-                    />
+                        className="p-2 w-[75%] rounded border bg-gray-100 text-black"
+						/>
                 </div>
 
                 <div className="flex flex-col">
-                    <label className="mb-2 font-medium">Additional Phone Number</label>
+                    <label className="mb-2 font-medium">Mobile Number 2:</label>
                     <input
                         type="text"
                         name="additionalPhoneNumber"
                         value={formData.additionalPhoneNumber}
                         onChange={handleChange}
-                        className="p-2 rounded border bg-gray-100 text-black"
-                    />
+                        className="p-2 w-[75%] rounded border bg-gray-100 text-black"
+						/>
                 </div>
 
                 <div className="flex flex-col">
@@ -218,10 +254,10 @@ const Profile = () => {
                         value={formData.country}
                         onChange={handleChange}
                         className="p-2 rounded border bg-gray-100 text-black"
-                    >
+						>
                         <option value="">Select Country</option>
                         {countries.map((country) => (
-                            <option key={country.code} value={country.name}>
+							<option key={country.code} value={country.name}>
                                 {country.name}
                             </option>
                         ))}
@@ -235,10 +271,10 @@ const Profile = () => {
                         value={formData.state}
                         onChange={handleChange}
                         className="p-2 rounded border bg-gray-100 text-black"
-                    >
+						>
                         <option value="">Select State</option>
                         {states.map((state) => (
-                            <option key={state.name} value={state.name}>
+							<option key={state.name} value={state.name}>
                                 {state.name}
                             </option>
                         ))}
@@ -252,10 +288,10 @@ const Profile = () => {
                         value={formData.city}
                         onChange={handleChange}
                         className="p-2 rounded border bg-gray-100 text-black"
-                    >
+						>
                         <option value="">Select City</option>
                         {cities.map((city) => (
-                            <option key={city} value={city}>
+							<option key={city} value={city}>
                                 {city}
                             </option>
                         ))}
@@ -270,28 +306,31 @@ const Profile = () => {
                         value={formData.zipCode}
                         onChange={handleChange}
                         className="p-2 rounded border bg-gray-100 text-black"
-                    />
+						/>
                 </div>
 
                 <div className="flex flex-col">
-                    <label className="mb-2 font-medium">Address</label>
+                    <label className="mb-2 font-medium">Address Line 1</label>
                     <input
                         type="text"
                         name="address1"
                         value={formData.address1}
                         onChange={handleChange}
                         className="p-2 rounded border bg-gray-100 text-black"
-                    />
+						/>
                 </div>
 
                 <button
                     type="submit"
-                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-                >
-                    Save Changes
+                    className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+					>
+                    Update Profile
                 </button>
             </form>
         </div>
+
+
+		</div>
     );
 };
 
