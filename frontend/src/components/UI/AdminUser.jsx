@@ -30,7 +30,7 @@ const UsersList = () => {
 
 
 	const rows = users.map((user, index) => ({
-		id: index + 1, 
+		id: index + 1,
 		name: user.name,
 		email: user.email,
 		role: user.role,
