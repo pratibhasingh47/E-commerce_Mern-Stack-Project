@@ -27,7 +27,7 @@ const Footer = () => {
                         <a href="" className='font-lato text-white text-sm' >Cancellations & Returns</a>
                         <a href="" className='font- text-white text-sm' >FAQ</a>
                     </div>
-                </div> 
+                </div>
 
                 <div className='p-4 flex w-[20%] flex-col '>
                     <p className='text-white font-lato  font-bold text-2xl'>Consumer Policy</p>

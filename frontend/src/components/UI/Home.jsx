@@ -19,7 +19,7 @@ const Home = () => {
 
 	// Group products by category
 	const groupedProducts = products.reduce((acc, product) => {
-		const { category } = product; 
+		const { category } = product;
 		if (!acc[category]) {
 			acc[category] = [];
 		}
@@ -31,7 +31,7 @@ const Home = () => {
 		<div>
 			<Carousel />
 			<div className='w-[90%] mx-auto'>
-				
+
 				{Object.keys(groupedProducts).map((category, index) => (
 					<div key={index} className='mt-10'>
 						<h2 className='text-3xl font-bold font-lato text-left'>{category}</h2>
