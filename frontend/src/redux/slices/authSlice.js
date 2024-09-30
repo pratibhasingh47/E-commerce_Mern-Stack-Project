@@ -46,7 +46,15 @@ export const updateUser = createAsyncThunk("auth/updateUserProfile", async (upda
 });
 
 export const getUserProfile = createAsyncThunk('auth/getUserProfile', async () => {
-    const response = await axios.get('http://localhost:5000/auth/getUserProfile');
+    // Get the token from local storage or wherever you store it
+    const token = localStorage.getItem('token'); // Adjust this line based on how you store your token
+
+    const response = await axios.get('http://localhost:5000/auth/getUserProfile', {
+        headers: {
+            Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+        },
+    });
+    
     return response.data; 
 });
 

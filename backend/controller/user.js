@@ -1,6 +1,7 @@
 const User = require("../model/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const authMiddleware = require('../middleware/updateMiddleware')
 
 exports.signup = async (req,res , next)=>{
     try {
@@ -45,7 +46,7 @@ exports.login = async (req,res,next)=>{
 
         const token = jwt.sign({id : isExisting._id , email : isExisting.email ,  role :  isExisting.role},process.env.JWT_SECRET,{expiresIn : "1h"});
         res.status(200).send({message : "User Logged-In" , data : isExisting  ,  token : token});
- 
+
     } catch (error) {
         next(error);
     }
@@ -63,15 +64,19 @@ exports.getAllUsers = async (req,res,next)=>{
 
 exports.getUserProfile = async (req, res) => {
     try {
-        const { email  } = req.body;
-        const isExisting = await User.findOne({email : email});
-        if (!isExisting) {
+        console.log("User ID from middleware:", req.user.id); // Debugging log
+
+        const userId = req.user.id; // Extracted from the authMiddleware
+        const user = await User.findById(userId).select('-password'); 
+
+        if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-        res.json(user);
+
+        res.status(200).json(user);
     } catch (error) {
-        console.error(error); // Log error for debugging
-        res.status(500).json({ message: "Server error", error: error.message });
+        console.error("Error fetching user profile:", error);
+        res.status(500).json({ message: "Internal server error", error: error.message });
     }
 };
 

@@ -23,8 +23,13 @@ const Profile = () => {
         address1: "",
     });
 
+    const [countries, setCountries] = useState([]);
+    const [states, setStates] = useState([]);
+    const [cities, setCities] = useState([]);
+
     useEffect(() => {
         dispatch(getUserProfile()); // Dispatch the thunk to get user profile on mount
+        fetchCountries();
     }, [dispatch]);
 
     useEffect(() => {
@@ -47,11 +52,71 @@ const Profile = () => {
         }
     }, [user]);
 
+    const fetchCountries = async () => {
+        try {
+            const response = await fetch("https://restcountries.com/v3.1/all");
+            const data = await response.json();
+            setCountries(data.map(country => ({ name: country.name.common, code: country.cca2 })));
+        } catch (error) {
+            console.error("Error fetching countries:", error);
+        }
+    };
+
+    const fetchStates = async (country) => {
+        try {
+            // Fetch states based on the selected country
+            const response = await fetch(`https://countriesnow.space/api/v0.1/countries/states`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ country: country }),
+            });
+            const data = await response.json();
+            setStates(data.data.states);
+        } catch (error) {
+            console.error("Error fetching states:", error);
+        }
+    };
+
+    const fetchCities = async (state) => {
+        try {
+            // Fetch cities based on the selected state
+            const response = await fetch(`https://countriesnow.space/api/v0.1/countries/state/cities`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ country: formData.country, state: state }),
+            });
+            const data = await response.json();
+            setCities(data.data);
+        } catch (error) {
+            console.error("Error fetching cities:", error);
+        }
+    };
+
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+
+        if (name === "country") {
+            fetchStates(value); // Fetch states when country changes
+            setFormData((prevData) => ({
+                ...prevData,
+                state: "", // Reset state and city when country changes
+                city: "",
+            }));
+        } else if (name === "state") {
+            fetchCities(value); // Fetch cities when state changes
+            setFormData((prevData) => ({
+                ...prevData,
+                city: "", // Reset city when state changes
+            }));
+        }
     };
 
     const handleSubmit = (e) => {
@@ -148,35 +213,53 @@ const Profile = () => {
 
                 <div className="flex flex-col">
                     <label className="mb-2 font-medium">Country</label>
-                    <input
-                        type="text"
+                    <select
                         name="country"
                         value={formData.country}
                         onChange={handleChange}
                         className="p-2 rounded border bg-gray-100 text-black"
-                    />
+                    >
+                        <option value="">Select Country</option>
+                        {countries.map((country) => (
+                            <option key={country.code} value={country.name}>
+                                {country.name}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
                 <div className="flex flex-col">
                     <label className="mb-2 font-medium">State</label>
-                    <input
-                        type="text"
+                    <select
                         name="state"
                         value={formData.state}
                         onChange={handleChange}
                         className="p-2 rounded border bg-gray-100 text-black"
-                    />
+                    >
+                        <option value="">Select State</option>
+                        {states.map((state) => (
+                            <option key={state.name} value={state.name}>
+                                {state.name}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
                 <div className="flex flex-col">
                     <label className="mb-2 font-medium">City</label>
-                    <input
-                        type="text"
+                    <select
                         name="city"
                         value={formData.city}
                         onChange={handleChange}
                         className="p-2 rounded border bg-gray-100 text-black"
-                    />
+                    >
+                        <option value="">Select City</option>
+                        {cities.map((city) => (
+                            <option key={city} value={city}>
+                                {city}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
                 <div className="flex flex-col">
@@ -201,9 +284,9 @@ const Profile = () => {
                     />
                 </div>
 
-                <button 
-                    type="submit" 
-                    className="py-2 px-4 rounded bg-blue-500 text-white hover:bg-blue-700 transition-colors"
+                <button
+                    type="submit"
+                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
                 >
                     Save Changes
                 </button>
