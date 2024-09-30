@@ -38,11 +38,16 @@ export const updateUser = createAsyncThunk("auth/updateUserProfile", async (upda
                 Authorization: `Bearer ${token}`,
             },
         };
-        const response = await axios.put("http://localhost:5000/auth/updateProfile", updatedData, config);
+        const response = await axios.put("http://localhost:5000/auth/updateUserProfile", updatedData, config);
         return response.data.data;
     } catch (error) {
         return rejectWithValue(error);
     }
+});
+
+export const getUserProfile = createAsyncThunk('auth/getUserProfile', async () => {
+    const response = await axios.get('http://localhost:5000/auth/getUserProfile');
+    return response.data; 
 });
 
 const getRole = () => {
@@ -77,6 +82,9 @@ const authSlice = createSlice({
             state.user = action.payload.user,
                 state.role = action.payload.role,
                 state.isAuth = true
+        },
+        updateUserProfile: (state, action) => {
+            state.user = { ...state.user, ...action.payload };
         }
     },
     extraReducers: (builder) => {
@@ -128,11 +136,23 @@ const authSlice = createSlice({
             .addCase(updateUser.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
+            })
+            .addCase(getUserProfile.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(getUserProfile.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.user = action.payload; // Set user data to the state
+            })
+            .addCase(getUserProfile.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.error.message;
             });
 
     }
 })
 
-export const { logOut, loginWithGoogle } = authSlice.actions;
+export const { logOut, loginWithGoogle ,updateUserProfile  } = authSlice.actions;
 
 export default authSlice.reducer;

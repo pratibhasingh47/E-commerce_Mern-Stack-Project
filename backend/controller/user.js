@@ -63,13 +63,15 @@ exports.getAllUsers = async (req,res,next)=>{
 
 exports.getUserProfile = async (req, res) => {
     try {
-        const user = await User.findById(req.user.id); 
-        if (!user) {
+        const { email  } = req.body;
+        const isExisting = await User.findOne({email : email});
+        if (!isExisting) {
             return res.status(404).json({ message: "User not found" });
         }
         res.json(user);
     } catch (error) {
-        res.status(500).json({ message: "Server error", error });
+        console.error(error); // Log error for debugging
+        res.status(500).json({ message: "Server error", error: error.message });
     }
 };
 
