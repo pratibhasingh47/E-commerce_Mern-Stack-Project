@@ -5,8 +5,8 @@ import Navbar from './Navbar'
 const OpenRoutes = () => {
   return (
     <div className='w-full h-full'>
-      <Navbar />
-      <Outlet />
+        <Navbar />
+        <Outlet />
     </div>
   )
 }

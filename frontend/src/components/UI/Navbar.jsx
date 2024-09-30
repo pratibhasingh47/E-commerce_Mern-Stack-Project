@@ -5,8 +5,8 @@ import { FiLogOut } from "react-icons/fi";
 import { logOut } from '../../redux/slices/authSlice';
 import { toggleTheme } from '../../redux/slices/themesSlice';
 import '../css/Navbar.css';
-import logo from '../../assets/logo.png';
-import logo_light from '../../assets/logo_black.png'
+import logo from '../../assets/logo1_white.png';
+import logo_light from '../../assets/logo1.png'
 import { GrCart } from "react-icons/gr";
 import { AiTwotoneCarryOut } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
@@ -21,12 +21,16 @@ import { styled } from '@mui/material/styles';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
+import Badge from '@mui/material/Badge';
+
 
 
 
 const Navbar = () => {
     const { isAuth, role } = useSelector((state) => state.auth);
     const theme = useSelector((state) => state.theme?.theme);
+    const { cartItem } = useSelector((state) => state.cart);
+
     const dispatch = useDispatch();
 
     const handleLogOut = () => {
@@ -45,8 +49,8 @@ const Navbar = () => {
 
 
     const categories = [
-        { name: 'Men', route: '/men' },
-        { name: 'Women', route: '/women' },
+        { name: 'Beauty', route: '/beauty' },
+        { name: 'Home and Kitchen', route: '/home&Kitchen' },
         { name: 'Clothes (Women)', route: '/clothes-women' },
         { name: 'Clothes (Men)', route: '/clothes-men' },
         { name: 'Kids Section', route: '/kids' },
@@ -154,8 +158,17 @@ const Navbar = () => {
                                 ?
                                 (
                                     <div className='menu-items'>
+                                        <Link className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/cart">
+                                            <div className='flex flex-col items-center hover:transform hover:scale-105'>
+                                                <Badge badgeContent={cartItem.length} color="error">
+                                                    <div className='flex flex-col items-center'>
+                                                        <GrCart className='icons' />
+                                                        <p className='text-xl'>Cart</p>
+                                                    </div>
 
-                                        <Link className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/cart"><GrCart className='icons' />Cart</Link>
+                                                </Badge>
+                                            </div>
+                                        </Link>
                                         <Link className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/myorder"> <AiTwotoneCarryOut className='icons' /> My-Orders</Link>
                                         <Link className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/profile"> <FaUser className='icons' /> Profile</Link>
                                     </div>
@@ -175,7 +188,19 @@ const Navbar = () => {
                         :
                         (
                             <div className='menu-items'>
-                                <Link className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/cart"> <GrCart className='icons' /> Cart</Link>
+
+                                <Link className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/cart">
+                                    <div className='flex flex-col items-center hover:transform hover:scale-105'>
+                                        <Badge badgeContent={cartItem.length} color="error">
+                                            <div className='flex flex-col items-center'>
+                                                <GrCart className='icons' />
+                                                <p className='text-xl'>Cart</p>
+                                            </div>
+
+                                        </Badge>
+                                    </div>
+                                </Link>
+
                                 <Link className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/login"> <FaUserCheck className='icons' />
                                     Login</Link>
                                 <Link className={`navbar_link ${theme === 'dark' ? 'dark-link' : 'light-link'}`} to="/signup"><HiMiniUserPlus className='icons' />

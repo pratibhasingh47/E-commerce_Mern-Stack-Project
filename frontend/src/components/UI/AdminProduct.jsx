@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import DataTable from './Datatable'
 import ModelComponent from './ModalComponent'
 import { FaEdit } from "react-icons/fa";
-import { toggleTheme } from '../../redux/slices/themesSlice';
 import { useSelector } from 'react-redux';
 
 

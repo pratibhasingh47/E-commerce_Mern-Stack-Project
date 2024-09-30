@@ -8,6 +8,8 @@ import { useNavigate, Link } from 'react-router-dom';;
 import loginpng from '../../assets/login.png';
 import '../css/Signup-Login.css';
 import { FcGoogle } from "react-icons/fc";
+import shop from '../../assets/Shop.jpg';
+
 
 const Login = () => {
     const validationSchema = z.object({
@@ -35,8 +37,12 @@ const Login = () => {
         navigate('/signup'); // Navigate to login route when 'Login Here' is clicked
     };
 
-    const handleGoogleLogin = () => {
+    const handleGoogleLogin = ()=>{
         window.location.href = "http://localhost:5000/api/auth/google";
+    }
+
+    const handleHomePage = ()=>{
+        navigate('/');
     }
 
 
@@ -54,7 +60,7 @@ const Login = () => {
             <div className="right-leftCon">
 
                 <div className="right">
-                    <img src="https://images.pexels.com/photos/18425556/pexels-photo-18425556/free-photo-of-white-peony-flowers-on-a-branch.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" />
+                    <img src={shop} alt="" />
                     <p className='right_heading'>Welcome to Prat's Shop !!!</p>
                     <p className='right_content'>Get access to your Orders, Wishlist and Recommendations</p>
                 </div>
@@ -80,7 +86,7 @@ const Login = () => {
                                     {/* <input type="text" className='p-2 w-[100%] mt-0 rounded mb-3 outline-none ' /> */}
                                     <input type="text" className={`signup_input ${errors.email ? "border-red-500 outline-none" : "outline-none"}`} {...register("email")} />
                                     {errors.email && (
-                                        <p className='error'>{errors.email.message}</p>
+                                        <p className='error'>{errors.email.message}*</p>
                                     )}
                                 </div>
 
@@ -89,7 +95,7 @@ const Login = () => {
                                     {/* <input type="text " className='p-2 w-[100%] mt-0 rounded mb-3 outline-none ' /> */}
                                     <input type="password" className={`signup_input  ${errors.password ? "border-red-500 outline-none" : "outline-none"}`} {...register("password")} />
                                     {errors.password && (
-                                        <p className='error'>{errors.password.message}</p>
+                                        <p className='error'>{errors.password.message}*</p>
                                     )}
                                 </div>
 
@@ -103,6 +109,7 @@ const Login = () => {
                             <span className='login_here' onClick={handleSignupNavigation} >Sign-Up Here!</span>
                         </p>
                         <button className='google_login' onClick={handleGoogleLogin}> <FcGoogle className='googlePic' /> Log-In- With Google</button>
+                        <p className='my-8 cursor-pointer' onClick={handleHomePage} >Back to HomePage</p>
                     </div>
 
                 </div>

@@ -65,7 +65,7 @@ const ModelComponent = ({ open, setOpen, isUpdate, row }) => {
 				aria-describedby="modal-desc"
 				open={open}
 				onClose={() => setOpen(false)}
-				sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+				sx={{ display: 'flex', justifyContent: 'center' , alignItems: 'center' }}
 			>
 				<Sheet
 					variant="outlined"
@@ -77,7 +77,7 @@ const ModelComponent = ({ open, setOpen, isUpdate, row }) => {
 						id="modal-title"
 						level="h4"
 						textColor="inherit"
-						sx={{ fontWeight: '600', mb: 2, fontSize: '2rem' }}
+						sx={{ fontWeight: '600', mb: 2 , fontSize : '2rem'}}
 					>
 						{isUpdate ? "Update Product" : "Add Product"}
 					</Typography>

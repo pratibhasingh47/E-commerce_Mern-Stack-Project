@@ -21,7 +21,7 @@ const Carousel = () => {
   };
 
   return (
-    <div style={{ width: "90%", margin: "auto", paddingTop: "20px", marginBottom: '2.5rem', }}>
+    <div style={{ width: "90%", margin: "auto", paddingTop: "20px" , marginBottom : '2.5rem' ,  }}>
       <Slider {...settings}>
         <div>
           <img

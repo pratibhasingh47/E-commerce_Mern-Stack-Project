@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import loginpng from '../../assets/login.png';
 import '../css/Signup-Login.css';
 import { FcGoogle } from "react-icons/fc";
+import shop from '../../assets/Shop.jpg';
 
 
 const Signup = () => {
@@ -32,7 +33,7 @@ const Signup = () => {
     const onSubmit = async (data) => {
         const result = await dispatch(signup(data));
         if (result.meta.requestStatus === 'fulfilled') {
-            navigate('/login'); // Navigate to home route on successful sign-up
+            navigate('/login'); 
         }
     }
 
@@ -40,8 +41,13 @@ const Signup = () => {
         window.location.href = "http://localhost:5000/api/auth/google";
     }
 
+    const handleHomePage = ()=>{
+        navigate('/');
+    }
+
+
     const handleLoginNavigation = () => {
-        navigate('/login'); // Navigate to login route when 'Login Here' is clicked
+        navigate('/login'); 
     };
 
     return (
@@ -52,7 +58,7 @@ const Signup = () => {
 
         <div className="right">
             {/* <img  src="https://images.pexels.com/photos/1408221/pexels-photo-1408221.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" /> */}
-            <img  src="https://images.pexels.com/photos/18425556/pexels-photo-18425556/free-photo-of-white-peony-flowers-on-a-branch.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" />
+            <img  src={shop} alt="" />
             <p className='right_heading'>Welcome to Prat's Shop !!!</p>
             <p className='right_content'>Get access to your Orders, Wishlist and Recommendations</p>
             {/* <img className='right_img' src="https://static.vecteezy.com/system/resources/thumbnails/012/443/036/small/woman-sitting-table-with-laptop-and-phone-working-on-a-computer-freelance-online-education-or-social-media-concept-studying-concept-png.png" alt="" /> */}
@@ -101,13 +107,14 @@ const Signup = () => {
                             )}
                         </div>
                     </div>
-                    <button className='signup_button'>Sign-Up</button>
+                    <button className='signup_button' >Sign-Up</button>
                 </form>
                 <p className='already_account'>
                     Have an account? 
                     <span className='login_here' onClick={handleLoginNavigation} >Login Here!</span>
                 </p>
                 <button className='google_login' onClick={handleGoogleLogin}> <FcGoogle className='googlePic' /> Log-In- With Google</button>
+                <p className='mt-4 cursor-pointer' onClick={handleHomePage} >Back to HomePage</p>
             </div>
 
         </div>

@@ -50,3 +50,13 @@ exports.login = async (req,res,next)=>{
         next(error);
     }
 }
+
+exports.getAllUsers = async (req,res,next)=>{
+    try {
+        // const users = await User.find({role : "User"});
+        const users = await User.find();
+        res.status(200).send({message : "User Fetched" , data : users});
+    } catch (error) {
+        next(error);
+    }
+}

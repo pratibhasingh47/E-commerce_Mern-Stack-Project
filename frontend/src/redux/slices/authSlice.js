@@ -21,6 +21,15 @@ export const login = createAsyncThunk("auth/login", async (data, { rejectWithVal
     }
 })
 
+export const getAllUsers = createAsyncThunk("auth/getAllUsers", async (data, { rejectWithValue }) => {
+    try {
+        const response = await axios.post("http://localhost:5000/auth/getUsers");
+        return response.data.data;
+    } catch (error) {
+        return rejectWithValue(error);
+    }
+})
+
 const getRole = () => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -35,7 +44,8 @@ const initialState = {
     user: null,
     error: null,
     isAuth: localStorage.getItem("token") ? true : false,
-    role: getRole()
+    role: getRole(),
+    users: [],
 }
 
 const authSlice = createSlice({
@@ -82,6 +92,17 @@ const authSlice = createSlice({
                 state.isLoading = false;
                 state.error = action.payload
             })
+            .addCase(getAllUsers.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getAllUsers.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.users = action.payload; 
+            })
+            .addCase(getAllUsers.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            });
     }
 })
 

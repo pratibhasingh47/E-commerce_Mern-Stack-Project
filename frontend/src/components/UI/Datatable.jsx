@@ -28,10 +28,10 @@ export default function DataTable({ columns }) {
 			<DataGrid
 				rows={products}
 				columns={columns}
-				rowHeight={150}
+				rowHeight={150} 
 				initialState={{ pagination: { paginationModel } }}
 				pageSizeOptions={[10, 10]}
-				sx={{ border: 0 }}
+				sx={{ border: 0  }}
 			/>
 		</Paper>
 	);

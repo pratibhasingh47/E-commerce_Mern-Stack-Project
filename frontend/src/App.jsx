@@ -6,7 +6,7 @@ import store from './redux/store/store';
 import '@fontsource/inter';
 
 const ThemeHandler = () => {
-	const theme = useSelector((state) => state.theme?.theme); 
+	const theme = useSelector((state) => state.theme?.theme); // Add optional chaining to prevent undefined access
 
 	useEffect(() => {
 		document.body.className = theme === 'dark' ? 'dark-theme' : 'light-theme';
