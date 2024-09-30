@@ -124,17 +124,17 @@ const Profile = () => {
         dispatch(updateUser(formData));
     };
 
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        console.log(file); 
-    };
+    // const handleFileChange = (e) => {
+    //     const file = e.target.files[0];
+    //     console.log(file); 
+    // };
 
     return ( 
 
 		<div className="flex justify-center items-center ">
 
 
-        <div className="p-6 mt-8 w-[90%] h-auto  bg-white text-black rounded-lg shadow-lg">
+        <div className="p-6 mt-8  mb-16  w-[90%] h-auto font-lato  bg-white text-black rounded-lg shadow-lg">
 
             <div className="flex justify-between items-center">
                 <h2 className="text-3xl font-lato font-bold mb-4">Profile</h2>
@@ -253,7 +253,7 @@ const Profile = () => {
                         name="country"
                         value={formData.country}
                         onChange={handleChange}
-                        className="p-2 rounded border bg-gray-100 text-black"
+                        className="p-2 w-[75%] rounded border bg-gray-100 text-black"
 						>
                         <option value="">Select Country</option>
                         {countries.map((country) => (
@@ -270,7 +270,7 @@ const Profile = () => {
                         name="state"
                         value={formData.state}
                         onChange={handleChange}
-                        className="p-2 rounded border bg-gray-100 text-black"
+                        className="p-2 w-[75%] rounded border bg-gray-100 text-black"
 						>
                         <option value="">Select State</option>
                         {states.map((state) => (
@@ -287,7 +287,7 @@ const Profile = () => {
                         name="city"
                         value={formData.city}
                         onChange={handleChange}
-                        className="p-2 rounded border bg-gray-100 text-black"
+                        className="p-2 w-[75%] rounded border bg-gray-100 text-black"
 						>
                         <option value="">Select City</option>
                         {cities.map((city) => (
@@ -305,24 +305,24 @@ const Profile = () => {
                         name="zipCode"
                         value={formData.zipCode}
                         onChange={handleChange}
-                        className="p-2 rounded border bg-gray-100 text-black"
+                        className="p-2 w-[75%] rounded border bg-gray-100 text-black"
 						/>
                 </div>
 
                 <div className="flex flex-col">
-                    <label className="mb-2 font-medium">Address Line 1</label>
+                    <label className="mb-2 font-medium">Address(Street Address)</label>
                     <input
                         type="text"
                         name="address1"
                         value={formData.address1}
                         onChange={handleChange}
-                        className="p-2 rounded border bg-gray-100 text-black"
+                        className="p-2 w-[85%] rounded border bg-gray-100 text-black"
 						/>
                 </div>
 
                 <button
                     type="submit"
-                    className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+                    className="bg-blue-500 font-lato font-bold text-white p-2 rounded hover:bg-blue-600"
 					>
                     Update Profile
                 </button>

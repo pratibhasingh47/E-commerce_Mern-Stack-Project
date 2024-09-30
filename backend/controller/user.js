@@ -64,9 +64,9 @@ exports.getAllUsers = async (req,res,next)=>{
 
 exports.getUserProfile = async (req, res) => {
     try {
-        console.log("User ID from middleware:", req.user.id); // Debugging log
+        // console.log("User ID from middleware:", req.user.id); 
 
-        const userId = req.user.id; // Extracted from the authMiddleware
+        const userId = req.user.id; 
         const user = await User.findById(userId).select('-password'); 
 
         if (!user) {
@@ -97,18 +97,34 @@ exports.updateUserProfile = async (req, res) => {
         user.gender = gender || user.gender;
         user.profilePicture = profilePicture || user.profilePicture;
         user.additionalPhoneNumber = additionalPhoneNumber || user.additionalPhoneNumber;
-        user.address = {
-            country: address.country || user.address.country,
-            state: address.state || user.address.state,
-            city: address.city || user.address.city,
-            zipCode: address.zipCode || user.address.zipCode,
-            address1: address.address1 || user.address.address1,
-        };
+
+        // Check if address is provided
+        if (address) {
+            user.address = {
+                country: address.country || user.address.country,
+                state: address.state || user.address.state,
+                city: address.city || user.address.city,
+                zipCode: address.zipCode || user.address.zipCode,
+                address1: address.address1 || user.address.address1,
+            };
+        }
 
         await user.save();
 
-        res.json({ message: "Profile updated successfully", user });
+        res.json({
+            message: "Profile updated successfully",
+            user: {
+                firstName: user.firstName,
+                lastName: user.lastName,
+                DOB: user.DOB,
+                gender: user.gender,
+                profilePicture: user.profilePicture,
+                additionalPhoneNumber: user.additionalPhoneNumber,
+                address: user.address,
+            }
+        });
     } catch (error) {
-        res.status(500).json({ message: "Server error", error });
+        console.error(error); // Log the error for debugging
+        res.status(500).json({ message: "Server error" });
     }
 };

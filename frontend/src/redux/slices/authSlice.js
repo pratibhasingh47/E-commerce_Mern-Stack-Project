@@ -30,20 +30,40 @@ export const getAllUsers = createAsyncThunk("auth/getAllUsers", async (data, { r
     }
 })
 
-export const updateUser = createAsyncThunk("auth/updateUserProfile", async (updatedData, { rejectWithValue }) => {
-    try {
-        const token = localStorage.getItem("token");
-        const config = {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        };
-        const response = await axios.put("http://localhost:5000/auth/updateUserProfile", updatedData, config);
-        return response.data.data;
-    } catch (error) {
-        return rejectWithValue(error);
+export const updateUser = createAsyncThunk(
+    "auth/updateUserProfile",
+    async (updatedData, { rejectWithValue }) => {
+        try {
+            const token = localStorage.getItem("token");
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            };
+            const response = await axios.put(
+                "http://localhost:5000/auth/updateUserProfile",
+                updatedData,
+                config
+            );
+
+            // Ensure response structure matches expectations
+            if (response.data && response.data.data) {
+                return response.data.data; // Return the user data as expected
+            } else {
+                throw new Error("Unexpected response structure");
+            }
+        } catch (error) {
+            // Extract only serializable parts of the error object
+            const serializableError = {
+                message: error.message || "An error occurred",
+                status: error.response?.status || 500, // Use default status 500 if response is missing
+                data: error.response?.data || "An unknown error occurred", // Provide fallback data
+            };
+            return rejectWithValue(serializableError);
+        }
     }
-});
+);
+
 
 export const getUserProfile = createAsyncThunk('auth/getUserProfile', async () => {
     // Get the token from local storage or wherever you store it
@@ -54,8 +74,8 @@ export const getUserProfile = createAsyncThunk('auth/getUserProfile', async () =
             Authorization: `Bearer ${token}`, // Include the token in the Authorization header
         },
     });
-    
-    return response.data; 
+
+    return response.data;
 });
 
 const getRole = () => {
@@ -128,7 +148,7 @@ const authSlice = createSlice({
             })
             .addCase(getAllUsers.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.users = action.payload; 
+                state.users = action.payload;
             })
             .addCase(getAllUsers.rejected, (state, action) => {
                 state.isLoading = false;
@@ -161,6 +181,6 @@ const authSlice = createSlice({
     }
 })
 
-export const { logOut, loginWithGoogle ,updateUserProfile  } = authSlice.actions;
+export const { logOut, loginWithGoogle, updateUserProfile } = authSlice.actions;
 
 export default authSlice.reducer;
