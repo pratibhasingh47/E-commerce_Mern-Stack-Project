@@ -80,7 +80,6 @@ exports.getUserProfile = async (req, res) => {
     }
 };
 
-
 exports.updateUserProfile = async (req, res) => {
     try {
         const { firstName, lastName, DOB, gender, profilePicture, additionalPhoneNumber, address, country, state, city } = req.body;
@@ -99,28 +98,29 @@ exports.updateUserProfile = async (req, res) => {
         user.additionalPhoneNumber = additionalPhoneNumber || user.additionalPhoneNumber;
 
         // Update address, country, state, and city if provided
-        if (address) {
-            user.address = address || user.address;
-        }
-        if (country) {
-            user.country = country || user.country;
-        }
-        if (state) {
-            user.state = state || user.state;
-        }
-        if (city) {
-            user.city = city || user.city;
-        }
+        if (address) user.address = address;
+        if (country) user.country = country;
+        if (state) user.state = state;
+        if (city) user.city = city;
 
         // Save the updated user information
         await user.save();
+
+        // Optionally issue a new token if user data is part of the token
+        const payload = {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email // Include more fields if necessary
+        };
+        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         res.json({
             message: "Profile updated successfully",
             user: {
                 firstName: user.firstName,
                 lastName: user.lastName,
-                dob: user.dob,
+                dob: user.DOB,
                 gender: user.gender,
                 profilePicture: user.profilePicture,
                 additionalPhoneNumber: user.additionalPhoneNumber,
@@ -128,13 +128,70 @@ exports.updateUserProfile = async (req, res) => {
                 country: user.country,
                 state: user.state,
                 city: user.city,
-            }
+            },
+            token // Return the new token
         });
     } catch (error) {
-        console.error(error); // Log the error for debugging
+        console.error(error);
         res.status(500).json({ message: "Server error" });
     }
 };
+
+
+// exports.updateUserProfile = async (req, res) => {
+//     try {
+//         const { firstName, lastName, DOB, gender, profilePicture, additionalPhoneNumber, address, country, state, city } = req.body;
+//         const user = await User.findById(req.user.id);
+
+//         if (!user) {
+//             return res.status(404).json({ message: "User not found" });
+//         }
+
+//         // Update user fields
+//         user.firstName = firstName || user.firstName;
+//         user.lastName = lastName || user.lastName;
+//         user.DOB = DOB || user.DOB;
+//         user.gender = gender || user.gender;
+//         user.profilePicture = profilePicture || user.profilePicture;
+//         user.additionalPhoneNumber = additionalPhoneNumber || user.additionalPhoneNumber;
+
+//         // Update address, country, state, and city if provided
+//         if (address) {
+//             user.address = address || user.address;
+//         }
+//         if (country) {
+//             user.country = country || user.country;
+//         }
+//         if (state) {
+//             user.state = state || user.state;
+//         }
+//         if (city) {
+//             user.city = city || user.city;
+//         }
+
+//         // Save the updated user information
+//         await user.save();
+
+//         res.json({
+//             message: "Profile updated successfully",
+//             user: {
+//                 firstName: user.firstName,
+//                 lastName: user.lastName,
+//                 dob: user.dob,
+//                 gender: user.gender,
+//                 profilePicture: user.profilePicture,
+//                 additionalPhoneNumber: user.additionalPhoneNumber,
+//                 address: user.address,
+//                 country: user.country,
+//                 state: user.state,
+//                 city: user.city,
+//             }
+//         });
+//     } catch (error) {
+//         console.error(error); // Log the error for debugging
+//         res.status(500).json({ message: "Server error" });
+//     }
+// };
 
 
 // exports.updateUserProfile = async (req, res) => {

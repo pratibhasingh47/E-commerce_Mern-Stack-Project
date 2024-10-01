@@ -1,6 +1,6 @@
 .mainContainer{
     /* width: 100vw; height: 100vh; justify-content: center; align-items: center; display: flex; background-image: url(../../assets/background.jpg); background-repeat: no-repeat; background-size: cover; object-fit: cover; */
-    width: 100vw; height: 100vh; justify-content: center; align-items: center; display: flex;  background-color: snow;
+    width: 100vw; height: 100vh; justify-content: center; align-items: center; display: flex;  background-color: rgb(247, 191, 191);
 }
 .right-leftCon{
     width:80vw; height: 80vh; display: flex; justify-content: center;  

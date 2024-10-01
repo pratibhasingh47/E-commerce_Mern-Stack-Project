@@ -20,10 +20,10 @@ const Cart = () => {
     return (
         <div className='w-[90%]  mx-auto'>
 
-            <div className="flex flex-wrap justify-center gap-20 p-8">
+            <div className="flex w-[100%] flex-wrap justify-center gap-20 p-8">
 
                 {/* <div className="w-3/6 bg-gray-100 shadow-lg p-10 rounded"> */}
-                <div className={` className="w-2/3 bg-gray-100 shadow-lg p-10 rounded ${theme === 'dark' ? 'bg-slate-800 text-white' : 'bg-gray-100'}`}>
+                <div className={` className=" bg-gray-100 w-[50%] shadow-lg p-10 rounded ${theme === 'dark' ? 'bg-slate-800 text-white' : 'bg-gray-100'}`}>
 
                     <h1 className="text-3xl font-lato font-bold mb-4">Your Cart</h1>
                     {cartItems.length === 0 ? (
@@ -39,7 +39,7 @@ const Cart = () => {
                                                 alt={item.name}
                                                 className="w-20 h-auto object-cover mb-4 rounded"
                                             />
-                                            <h2 className="text-xl font-lato font-bold"><strong>Product Name :</strong> {item.name}</h2>
+                                            <h2 className="text-xl font-lato pb-3 font-bold"><strong>Product Name :</strong> {item.name}</h2>
                                             <p><strong>Price:</strong> {item.price}</p>
                                             <p><strong>Description:</strong> {item.description}</p>
                                             <p><strong>Category:</strong> {item.category}</p>

@@ -28,8 +28,8 @@ const Profile = () => {
     const [cities, setCities] = useState([]);
 
     useEffect(() => {
-        dispatch(getUserProfile()); // Dispatch the thunk to get user profile on mount
-        fetchCountries();
+        dispatch(getUserProfile());
+        fetchCountries()
     }, [dispatch]);
 
     useEffect(() => {
@@ -133,16 +133,16 @@ const Profile = () => {
         <div className="flex justify-center items-center ">
 
 
-            <div className="p-6 mt-8  mb-16  w-[90%] h-auto font-lato  bg-white text-black rounded-lg shadow-lg">
+            <div className="p-6 mt-8  mb-16  w-[70%] h-auto font-lato  bg-white text-black rounded-lg shadow-lg">
 
                 <div className="flex justify-between items-center">
                     <h2 className="text-3xl font-lato font-bold mb-4">Profile</h2>
                 </div>
 
-                {/* {isLoading && <p className="text-yellow-500">Loading...</p>}
-            {error && <p className="text-red-500">Error: {JSON.stringify(error)}</p>} */}
+                {isLoading && <p className="text-yellow-500">Loading...</p>}
+            {error && <p className="text-red-500">Error: {JSON.stringify(error)}</p>}
 
-                <form onSubmit={handleSubmit} className="w-[70%] space-y-4">
+                <form onSubmit={handleSubmit} className="w-[100%] space-y-4">
 
                     {/* <div className="flex items-center mb-4">
                     <div className="w-16 h-16 border rounded-full overflow-hidden mr-4 flex items-center justify-center">
