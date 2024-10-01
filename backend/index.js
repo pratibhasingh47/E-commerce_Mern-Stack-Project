@@ -14,31 +14,31 @@ require("./config/passport");
 const app = express();
 
 app.use(session({
-    secret : "Your_Secret_Key",
-    resave : false,
-    saveUninitialized : false,
-    cookie : {secure : false}
+    secret: "Your_Secret_Key",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }
 }));
 
 app.use(express.json());
-app.use(express.urlencoded({extended : true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
 
 connectDb();
 
-app.use("/uploads",express.static(path.join(__dirname , "uploads")))
+app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 
-app.use("/auth" , userRoutes);
-app.use("/api/auth",authRoutes);
-app.use("/api",productRoutes);
+app.use("/auth", userRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api", productRoutes);
 
 
 app.use(gloablErrorHandler);
 
 
-app.listen(5000,()=>{
+app.listen(5000, () => {
     console.log("Server is running on http://localhost:5000");
 });
 
