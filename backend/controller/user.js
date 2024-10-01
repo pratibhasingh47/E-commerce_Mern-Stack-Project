@@ -83,7 +83,7 @@ exports.getUserProfile = async (req, res) => {
 
 exports.updateUserProfile = async (req, res) => {
     try {
-        const { firstName, lastName, DOB, gender, profilePicture, additionalPhoneNumber, address } = req.body;
+        const { firstName, lastName, DOB, gender, profilePicture, additionalPhoneNumber, address, country, state, city } = req.body;
         const user = await User.findById(req.user.id);
 
         if (!user) {
@@ -98,17 +98,21 @@ exports.updateUserProfile = async (req, res) => {
         user.profilePicture = profilePicture || user.profilePicture;
         user.additionalPhoneNumber = additionalPhoneNumber || user.additionalPhoneNumber;
 
-        // Check if address is provided
+        // Update address, country, state, and city if provided
         if (address) {
-            user.address = {
-                country: address.country || user.address.country,
-                state: address.state || user.address.state,
-                city: address.city || user.address.city,
-                zipCode: address.zipCode || user.address.zipCode,
-                address1: address.address1 || user.address.address1,
-            };
+            user.address = address || user.address;
+        }
+        if (country) {
+            user.country = country || user.country;
+        }
+        if (state) {
+            user.state = state || user.state;
+        }
+        if (city) {
+            user.city = city || user.city;
         }
 
+        // Save the updated user information
         await user.save();
 
         res.json({
@@ -116,11 +120,14 @@ exports.updateUserProfile = async (req, res) => {
             user: {
                 firstName: user.firstName,
                 lastName: user.lastName,
-                DOB: user.DOB,
+                dob: user.dob,
                 gender: user.gender,
                 profilePicture: user.profilePicture,
                 additionalPhoneNumber: user.additionalPhoneNumber,
                 address: user.address,
+                country: user.country,
+                state: user.state,
+                city: user.city,
             }
         });
     } catch (error) {
@@ -128,3 +135,52 @@ exports.updateUserProfile = async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 };
+
+
+// exports.updateUserProfile = async (req, res) => {
+//     try {
+//         const { firstName, lastName, DOB, gender, profilePicture, additionalPhoneNumber, address } = req.body;
+//         const user = await User.findById(req.user.id);
+
+//         if (!user) {
+//             return res.status(404).json({ message: "User not found" });
+//         }
+
+//         // Update user fields
+//         user.firstName = firstName || user.firstName;
+//         user.lastName = lastName || user.lastName;
+//         user.DOB = DOB || user.DOB;
+//         user.gender = gender || user.gender;
+//         user.profilePicture = profilePicture || user.profilePicture;
+//         user.additionalPhoneNumber = additionalPhoneNumber || user.additionalPhoneNumber;
+
+//         // Check if address is provided
+//         if (address) {
+//             user.address = {
+//                 country: address.country || user.address.country,
+//                 state: address.state || user.address.state,
+//                 city: address.city || user.address.city,
+//                 zipCode: address.zipCode || user.address.zipCode,
+//                 address1: address.address1 || user.address.address1,
+//             };
+//         }
+
+//         await user.save();
+
+//         res.json({
+//             message: "Profile updated successfully",
+//             user: {
+//                 firstName: user.firstName,
+//                 lastName: user.lastName,
+//                 DOB: user.DOB,
+//                 gender: user.gender,
+//                 profilePicture: user.profilePicture,
+//                 additionalPhoneNumber: user.additionalPhoneNumber,
+//                 address: user.address,
+//             }
+//         });
+//     } catch (error) {
+//         console.error(error); // Log the error for debugging
+//         res.status(500).json({ message: "Server error" });
+//     }
+// };

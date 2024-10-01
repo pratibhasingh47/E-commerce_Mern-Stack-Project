@@ -8,13 +8,14 @@
     width: 100%;height: 100%;
 }
 .search_box{
-    width: 50vw; display: flex;align-items: stretch;justify-content: center;height: 50px;
+    width: 50vw; display: flex;align-items: stretch;justify-content: center;height: 50px; 
 }
 .navbar_search{
-    padding: 10px 20px; width: 70%; font-size: 1.2rem; outline: none;  border: 1px solid gray
+    padding: 10px 20px; width: 70%; font-size: 1.2rem; outline: none; border: 0.8px solid black;
 }
 .search_icon{
-    font-size: 2rem; color: #0f1111; background-color: rgb(247, 191, 191); height: 100%; padding: 0 10px 0 10px; border-radius: 0 5px 5px 0; width: 50px;
+    font-size: 2rem; color: #0f1111; background-color: rgb(247, 191, 191); height: 100%; padding: 0 10px 0 10px; border-radius: 0 5px 5px 0; width: 50px;border-top: 1px solid black;
+    border-left:none; border-bottom: 1px solid black; border-right:  1px solid black;
 }
 .navbar_menu{
     display: flex;align-items: center;gap: 2.5rem;
@@ -75,8 +76,11 @@
     padding: 10px;
     height: 100%;
     font-size: 16px;
-    border: 1px solid gray;
     cursor: pointer;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black; 
+    border-right: none;
 }
 
 .dropdown-menu {

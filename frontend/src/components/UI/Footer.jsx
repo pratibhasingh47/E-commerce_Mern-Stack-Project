@@ -42,7 +42,7 @@ const Footer = () => {
                 <div className='p-4 flex w-1/4 flex-col '>
                     <p className='text-white font-lato  font-bold text-2xl'>Registered Office Address :- </p>
                     <div className='w-[80%] my-4 flex flex-col'>
-                        <a href="" className='font-lato text-white text-sm'>Flipkart Internet Private Limited,</a>
+                        <a href="" className='font-lato text-white text-sm'>Prats shoppie Private Limited,</a>
                         <a href="" className='font-lato text-white text-sm' >Clove Embassy Tech Village</a>
                         <a href="" className='font-lato text-white text-sm' >Bengaluru, 560103,</a>
                         <a href="" className='font-lato text-white text-sm' >Karnataka, India</a>

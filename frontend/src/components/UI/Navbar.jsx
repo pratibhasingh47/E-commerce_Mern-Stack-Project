@@ -50,7 +50,7 @@ const Navbar = () => {
 
     const categories = [
         { name: 'Beauty', route: '/beauty' },
-        { name: 'Home and Kitchen', route: '/home&Kitchen' },
+        { name: 'Home & Furniture', route: '/home&Kitchen' },
         { name: 'Clothes (Women)', route: '/clothes-women' },
         { name: 'Clothes (Men)', route: '/clothes-men' },
         { name: 'Kids Section', route: '/kids' },

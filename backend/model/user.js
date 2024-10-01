@@ -90,7 +90,7 @@ const userSchema = mongoose.Schema({
         type: String,
         maxlength: [30, "Last name cannot exceed 30 characters"]
     },
-    DOB: {
+    dob: {
         type: Date,
     },
     gender: {
@@ -103,12 +103,25 @@ const userSchema = mongoose.Schema({
         default: ""
     },
     address: {
-        country: { type: String },
-        state: { type: String },
-        city: { type: String },
-        zipCode: { type: String },
-        address1: { type: String }
+        type: String, 
+        maxlength: [200, "Address cannot exceed 200 characters"]
+    },
+    country: {
+        type: String,
+        ref: "Country",
+        required: true
+    },
+    state: {
+        type: String,
+        ref: "State",
+        required: true
+    },
+    city: {
+        type: String,
+        ref: "City",
+        required: true
     }
+
 });
 
 
