@@ -22,6 +22,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import Badge from '@mui/material/Badge';
+import { AiFillCaretDown } from "react-icons/ai";
 
 
 
@@ -132,7 +133,7 @@ const Navbar = () => {
                 {/* Dropdown to select product category */}
                 <div className="dropdown">
                     <button className="dropdown-toggle" onClick={toggleDropdown}>
-                        All
+                        All <AiFillCaretDown />
                     </button>
                     {isDropdownOpen && (
                         <div className="dropdown-menu">
