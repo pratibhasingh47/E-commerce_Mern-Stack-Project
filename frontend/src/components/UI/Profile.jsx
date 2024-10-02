@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser, getUserProfile } from "../../redux/slices/authSlice"; // Import the thunk
 import { AiOutlineUpload } from "react-icons/ai"; // Importing an icon for upload
+import { AiOutlineEdit } from "react-icons/ai"; // Importing an icon for edit
 
 const Profile = () => {
     const dispatch = useDispatch();
@@ -26,10 +27,11 @@ const Profile = () => {
     const [countries, setCountries] = useState([]);
     const [states, setStates] = useState([]);
     const [cities, setCities] = useState([]);
+    const [isEditing, setIsEditing] = useState(false); // State to track edit mode
 
     useEffect(() => {
         dispatch(getUserProfile());
-        fetchCountries()
+        fetchCountries();
     }, [dispatch]);
 
     useEffect(() => {
@@ -42,14 +44,16 @@ const Profile = () => {
                 email: user.email || "",
                 phoneNumber: user.phoneNumber || "",
                 additionalPhoneNumber: user.additionalPhoneNumber || "",
-                country: user.address?.country || "",
-                state: user.address?.state || "",
-                city: user.address?.city || "",
-                zipCode: user.address?.zipCode || "",
-                address: user.address?.address || "",
+                country: user.country || "",
+                state: user.state || "",
+                city: user.city || "",
+                zipCode: user.zipCode || "",
+                address: user.address || "",
             });
         }
     }, [user]);
+
+
 
     const fetchCountries = async () => {
         try {
@@ -63,7 +67,6 @@ const Profile = () => {
 
     const fetchStates = async (country) => {
         try {
-            // Fetch states based on the selected country
             const response = await fetch(`https://countriesnow.space/api/v0.1/countries/states`, {
                 method: "POST",
                 headers: {
@@ -80,7 +83,6 @@ const Profile = () => {
 
     const fetchCities = async (state) => {
         try {
-            // Fetch cities based on the selected state
             const response = await fetch(`https://countriesnow.space/api/v0.1/countries/state/cities`, {
                 method: "POST",
                 headers: {
@@ -121,79 +123,69 @@ const Profile = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(updateUser(formData));
+        setIsEditing(false); // Exit edit mode after submission
     };
 
-    // const handleFileChange = (e) => {
-    //     const file = e.target.files[0];
-    //     console.log(file); 
-    // };
+    const handleEditToggle = () => {
+        setIsEditing((prev) => !prev); // Toggle edit mode
+    };
+
+    if (!user) {
+        return <div>Loading...</div>; // You can add a loading spinner or placeholder here
+    }
 
     return (
-
-        <div className="flex justify-center items-center ">
-
-
-            <div className="p-6 mt-8  mb-16  w-[70%] h-auto font-lato  bg-white text-black rounded-lg shadow-lg">
-
-                <div className="flex justify-between items-center">
+        <div className="flex justify-center w-screen font-lato items-center ">
+            <div className="p-6 mt-8 mb-16 w-[70%] h-auto font-lato bg-white text-black rounded-lg shadow-lg">
+                <div className="flex justify-between mb-8 items-center">
                     <h2 className="text-3xl font-lato font-bold mb-4">Profile</h2>
+                    <button
+                        onClick={handleEditToggle}
+                        className="border px-4 py-2 bg-slate-900 rounded-md text-white hover:text-xl flex items-center"
+                    >
+                        <AiOutlineEdit className="mr-1" />
+                        {isEditing ? "Cancel Edit" : "Edit Profile"}
+                    </button>
                 </div>
 
-                {isLoading && <p className="text-yellow-500">Loading...</p>}
-            {error && <p className="text-red-500">Error: {JSON.stringify(error)}</p>}
+                {/* {isLoading && <p className="text-yellow-500">Loading...</p>}
+                {error && <p className="text-red-500">Error: {JSON.stringify(error)}</p>} */}
 
                 <form onSubmit={handleSubmit} className="w-[100%] space-y-4">
-
-                    {/* <div className="flex items-center mb-4">
-                    <div className="w-16 h-16 border rounded-full overflow-hidden mr-4 flex items-center justify-center">
-					<img src="" alt="Profile" className="w-full h-full object-cover" />
-                    </div>
-                    <input
-					type="file"
-					accept="image/*"
-					onChange={handleFileChange}
-					className="hidden"
-					id="upload"
-                    />
-                    <label htmlFor="upload" className="flex items-center cursor-pointer">
-					<AiOutlineUpload className="text-gray-500 mr-2" />
-					Upload Profile Picture
-                    </label>
-					</div> */}
-
-                    <div className="grid grid-cols-2 gap-1">
-
-                        <div className="flex w-[70%] flex-col">
+                    <div className="grid grid-cols-2 mb-6 gap-1">
+                        <div className="flex w-[90%] flex-col">
                             <label className="mb-2 font-medium">First Name</label>
                             <input
                                 type="text"
                                 name="firstName"
                                 value={formData.firstName}
                                 onChange={handleChange}
-                                className="p-2 rounded w-full border bg-gray-100 text-black"
+                                disabled={!isEditing} // Disable field when not editing
+                                className={`p-2 rounded w-full border bg-gray-100 text-black ${!isEditing ? 'cursor-not-allowed' : ''}`}
                             />
                         </div>
 
-                        <div className="flex w-[70%] flex-col">
+                        <div className="flex w-[90%] flex-col">
                             <label className="mb-2 font-medium">Last Name</label>
                             <input
                                 type="text"
                                 name="lastName"
                                 value={formData.lastName}
                                 onChange={handleChange}
-                                className="p-2 rounded  w-full border bg-gray-100 text-black"
+                                disabled={!isEditing} // Disable field when not editing
+                                className={`p-2 rounded w-full border bg-gray-100 text-black ${!isEditing ? 'cursor-not-allowed' : ''}`}
                             />
                         </div>
-
                     </div>
 
-                    <div className="flex flex-col">
-                        <label className="mb-2 w-1/5 font-medium">Gender</label> {/* Added Gender Label */}
+                    <div className="flex mb-6 flex-col">
+                        <label className="mb-2 w-1/5 font-medium">Gender</label>
                         <select
-                            name="gender" // Gender select input
+                            name="gender"
                             value={formData.gender}
                             onChange={handleChange}
-                            className="p-2 rounded w-[35%] border bg-gray-100 text-black"
+                            disabled={!isEditing} // Disable field when not editing
+                            className={`p-2 rounded w-[35%] border bg-gray-100 text-black ${!isEditing ? 'cursor-not-allowed' : ''}`}
                         >
                             <option value="">Select Gender</option>
                             <option value="Male">Male</option>
@@ -202,7 +194,7 @@ const Profile = () => {
                         </select>
                     </div>
 
-                    <div className="flex flex-col">
+                    <div className="flex mb-6 flex-col">
                         <label className="mb-2 font-medium">Email</label>
                         <input
                             type="email"
@@ -213,124 +205,258 @@ const Profile = () => {
                         />
                     </div>
 
-                    <div className="flex flex-col">
+                    <div className="flex mb-6 flex-col">
                         <label className="mb-2 font-medium">Date</label>
                         <input
                             type="date"
                             name="dob"
                             value={formData.dob}
                             onChange={handleChange}
-                            className="p-2 w-[75%] rounded border bg-gray-100 text-black cursor-not-allowed"
+                            disabled={!isEditing} // Disable field when not editing
+                            className={`p-2 w-[75%] rounded border bg-gray-100 text-black ${!isEditing ? 'cursor-not-allowed' : ''}`}
                         />
                     </div>
 
-                    <div className="flex flex-col">
+                    <div className="flex mb-6 flex-col">
                         <label className="mb-2 font-medium">Mobile Number 1:</label>
                         <input
                             type="text"
                             name="phoneNumber"
                             value={formData.phoneNumber}
                             onChange={handleChange}
-                            className="p-2 w-[75%] rounded border bg-gray-100 text-black"
+                            disabled={!isEditing} // Disable field when not editing
+                            className={`p-2 w-[75%] rounded border bg-gray-100 text-black ${!isEditing ? 'cursor-not-allowed' : ''}`}
                         />
                     </div>
 
-                    <div className="flex flex-col">
+                    <div className="flex mb-6 flex-col">
                         <label className="mb-2 font-medium">Mobile Number 2:</label>
                         <input
                             type="text"
                             name="additionalPhoneNumber"
                             value={formData.additionalPhoneNumber}
                             onChange={handleChange}
-                            className="p-2 w-[75%] rounded border bg-gray-100 text-black"
+                            disabled={!isEditing} // Disable field when not editing
+                            className={`p-2 w-[75%] rounded border bg-gray-100 text-black ${!isEditing ? 'cursor-not-allowed' : ''}`}
                         />
                     </div>
 
-                    <div className="flex flex-col">
-                        <label className="mb-2 font-medium">Country</label>
-                        <select
-                            name="country"
-                            value={formData.country}
-                            onChange={handleChange}
-                            className="p-2 w-[75%] rounded border bg-gray-100 text-black"
-                        >
-                            <option value="">Select Country</option>
-                            {countries.map((country) => (
-                                <option key={country.code} value={country.name}>
-                                    {country.name}
-                                </option>
-                            ))}
-                        </select>
+                    {/* <div className="grid grid-cols-3 gap-4">
+                        <div className="flex flex-col">
+                            <label className="mb-2 font-medium">Country</label>
+                            {user.address.country ? ( // Check if country exists
+                                <input
+                                    type="text"
+                                    name="country"
+                                    value={formData.address.country}
+                                    onChange={handleChange}
+                                    disabled // Disable field when not editing
+                                    className="p-2 rounded border bg-gray-100 text-black cursor-not-allowed"
+                                />
+                            ) : (
+                                <select
+                                    name="country"
+                                    value={formData.country}
+                                    onChange={handleChange}
+                                    disabled={!isEditing} // Disable field when not editing
+                                    className={`p-2 rounded border bg-gray-100 text-black ${!isEditing ? 'cursor-not-allowed' : ''}`}
+                                >
+                                    <option value="">Select Country</option>
+                                    {countries.map((country) => (
+                                        <option key={country.code} value={country.name}>
+                                            {country.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label className="mb-2 font-medium">State</label>
+                            {user.address?.state ? ( // Check if state exists
+                                <input
+                                    type="text"
+                                    name="state"
+                                    value={formData.address.state}
+                                    onChange={handleChange}
+                                    disabled // Disable field when not editing
+                                    className="p-2 rounded border bg-gray-100 text-black cursor-not-allowed"
+                                />
+                            ) : (
+                                <select
+                                    name="state"
+                                    value={formData.state}
+                                    onChange={handleChange}
+                                    disabled={!isEditing || states.length === 0} // Disable field when not editing or if no states available
+                                    className={`p-2 rounded border bg-gray-100 text-black ${!isEditing ? 'cursor-not-allowed' : ''}`}
+                                >
+                                    <option value="">Select State</option>
+                                    {states.map((state) => (
+                                        <option key={state.name} value={state.name}>
+                                            {state.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label className="mb-2 font-medium">City</label>
+                            {user.address?.city ? ( // Check if city exists
+                                <input
+                                    type="text"
+                                    name="city"
+                                    value={formData.city}
+                                    onChange={handleChange}
+                                    disabled // Disable field when not editing
+                                    className="p-2 rounded border bg-gray-100 text-black cursor-not-allowed"
+                                />
+                            ) : (
+                                <select
+                                    name="city"
+                                    value={formData.address.city}
+                                    onChange={handleChange}
+                                    disabled={!isEditing || cities.length === 0} // Disable field when not editing or if no cities available
+                                    className={`p-2 rounded border bg-gray-100 text-black ${!isEditing ? 'cursor-not-allowed' : ''}`}
+                                >
+                                    <option value="">Select City</option>
+                                    {cities.map((city) => (
+                                        <option key={city} value={city}>
+                                            {city}
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
+                        </div>
+                    </div> */}
+
+                    <div className="grid grid-cols-3 mb-6 gap-4">
+                        {/* Country */}
+                        <div className="flex flex-col">
+                            <label className="mb-2 font-medium">Country</label>
+                            {formData.country ? ( // Show input field when country exists
+                                <input
+                                    type="text"
+                                    name="country"
+                                    value={formData.country}
+                                    onChange={handleChange}
+                                    disabled // Disable field when not editing
+                                    className="p-2 rounded border bg-gray-100 text-black cursor-not-allowed"
+                                />
+                            ) : (
+                                <select
+                                    name="country"
+                                    value={formData.country}
+                                    onChange={handleChange}
+                                    disabled={!isEditing} // Disable field when not editing
+                                    className={`p-2 rounded border bg-gray-100 text-black ${!isEditing ? 'cursor-not-allowed' : ''}`}
+                                >
+                                    <option value="">Select Country</option>
+                                    {countries.map((country) => (
+                                        <option key={country.code} value={country.name}>
+                                            {country.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
+                        </div>
+
+                        {/* State */}
+                        <div className="flex flex-col">
+                            <label className="mb-2 font-medium">State</label>
+                            {formData.state ? ( // Show input field when state exists
+                                <input
+                                    type="text"
+                                    name="state"
+                                    value={formData.state}
+                                    onChange={handleChange}
+                                    disabled // Disable field when not editing
+                                    className="p-2 rounded border bg-gray-100 text-black cursor-not-allowed"
+                                />
+                            ) : (
+                                <select
+                                    name="state"
+                                    value={formData.state}
+                                    onChange={handleChange}
+                                    disabled={!isEditing || states.length === 0} // Disable field when not editing or if no states available
+                                    className={`p-2 rounded border bg-gray-100 text-black ${!isEditing ? 'cursor-not-allowed' : ''}`}
+                                >
+                                    <option value="">Select State</option>
+                                    {states.map((state) => (
+                                        <option key={state.name} value={state.name}>
+                                            {state.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
+                        </div>
+
+                        {/* City */}
+                        <div className="flex flex-col">
+                            <label className="mb-2 font-medium">City</label>
+                            {formData.city ? ( // Show input field when city exists
+                                <input
+                                    type="text"
+                                    name="city"
+                                    value={formData.city}
+                                    onChange={handleChange}
+                                    disabled // Disable field when not editing
+                                    className="p-2 rounded border bg-gray-100 text-black cursor-not-allowed"
+                                />
+                            ) : (
+                                <select
+                                    name="city"
+                                    value={formData.city}
+                                    onChange={handleChange}
+                                    disabled={!isEditing || cities.length === 0} // Disable field when not editing or if no cities available
+                                    className={`p-2 rounded border bg-gray-100 text-black ${!isEditing ? 'cursor-not-allowed' : ''}`}
+                                >
+                                    <option value="">Select City</option>
+                                    {cities.map((city) => (
+                                        <option key={city} value={city}>
+                                            {city}
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
+                        </div>
                     </div>
 
-                    <div className="flex flex-col">
-                        <label className="mb-2 font-medium">State</label>
-                        <select
-                            name="state"
-                            value={formData.state}
-                            onChange={handleChange}
-                            className="p-2 w-[75%] rounded border bg-gray-100 text-black"
-                        >
-                            <option value="">Select State</option>
-                            {states.map((state) => (
-                                <option key={state.name} value={state.name}>
-                                    {state.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
 
-                    <div className="flex flex-col">
-                        <label className="mb-2 font-medium">City</label>
-                        <select
-                            name="city"
-                            value={formData.city}
-                            onChange={handleChange}
-                            className="p-2 w-[75%] rounded border bg-gray-100 text-black"
-                        >
-                            <option value="">Select City</option>
-                            {cities.map((city) => (
-                                <option key={city} value={city}>
-                                    {city}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-
-                    <div className="flex flex-col">
+                    <div className="flex mb-6 flex-col">
                         <label className="mb-2 font-medium">Zip Code</label>
                         <input
                             type="text"
                             name="zipCode"
                             value={formData.zipCode}
                             onChange={handleChange}
-                            className="p-2 w-[75%] rounded border bg-gray-100 text-black"
+                            disabled={!isEditing} // Disable field when not editing
+                            className={`p-2 w-[25%] rounded border bg-gray-100 text-black ${!isEditing ? 'cursor-not-allowed' : ''}`}
                         />
                     </div>
 
-                    <div className="flex flex-col">
-                        <label className="mb-2 font-medium">Address(Street Address)</label>
+                    <div className="flex flex-col pb-10">
+                        <label className="mb-2 font-medium">Address</label>
                         <input
                             type="text"
                             name="address"
                             value={formData.address}
                             onChange={handleChange}
-                            className="p-2 w-[85%] rounded border bg-gray-100 text-black"
+                            disabled={!isEditing} // Disable field when not editing
+                            className={`p-2 rounded border bg-gray-100 text-black ${!isEditing ? 'cursor-not-allowed' : ''}`}
                         />
                     </div>
 
-                    <button
-                        type="submit"
-                        className="bg-blue-500 font-lato font-bold text-white p-2 rounded hover:bg-blue-600"
-                    >
-                        Update Profile
-                    </button>
-
-
+                    {isEditing && (
+                        <button
+                            type="submit"
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        >
+                            Update Profile
+                        </button>
+                    )}
                 </form>
             </div>
-
-
         </div>
     );
 };
