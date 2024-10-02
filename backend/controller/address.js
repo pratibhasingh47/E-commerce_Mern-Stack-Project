@@ -4,18 +4,18 @@ const addAddress = async (req, res) => {
     try {
         const { address } = req.body;
         const userId = req.user._id;  
-        const userEmail = req.user.email; // Extract user email from the decoded token
+        const userEmail = req.user.email;
 
-        // Validate input
+        
         if (!address) {
             return res.status(400).json({ message: 'Address is required.' });
         }
 
-        // Create a new address entry in the database
+        
         const newAddress = new Address({
             address,
             userId,
-            userEmail, // Include userEmail in the address document
+            userEmail, 
         });
 
         await newAddress.save();

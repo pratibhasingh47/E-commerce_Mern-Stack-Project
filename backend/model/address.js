@@ -10,9 +10,9 @@ const addressSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'User', // Reference to User model if needed
+        ref: 'User',
     },
-    userEmail: { // New field for user email
+    userEmail: { 
         type: String,
         required: true,
         trim: true,

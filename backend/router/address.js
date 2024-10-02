@@ -2,15 +2,14 @@
 const express = require('express');
 const Address = require("../model/address");
 const router = express.Router();
-const authMiddleware = require('../middleware/updateMiddleware');  // Assuming you have authentication
+const authMiddleware = require('../middleware/updateMiddleware');  
 
 
 router.post('/addAddress', authMiddleware, async (req, res) => {
     const { address } = req.body;
-    const userId = req.user.id; // Assuming user ID is decoded from the token
-    const userEmail = req.user.email; // Assuming email is included in the token
+    const userId = req.user.id; 
+    const userEmail = req.user.email;
 
-    // Log to check userEmail and userId
     console.log("User ID:", userId);
     console.log("User Email:", userEmail);
 
