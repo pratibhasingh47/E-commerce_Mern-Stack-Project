@@ -10,29 +10,29 @@ const Order = () => {
 
 	const theme = useSelector((state) => state.theme?.theme);
 
-	
+
 	const [address, setAddress] = useState('');
 	const [isAddressSaved, setIsAddressSaved] = useState(false); // New state to track if address is saved
-	
-	
+
+
 	useEffect(() => {
 		const savedAddress = localStorage.getItem('shippingAddress');
 		if (savedAddress) {
 			setAddress(savedAddress);
-			setIsAddressSaved(true); 
+			setIsAddressSaved(true);
 		}
 	}, []);
-	
+
 	const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
 	const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-	
+
 	// Calculate expected delivery date (5 days ahead)
 	const getExpectedDeliveryDate = () => {
 		const today = new Date();
 		const deliveryDate = new Date(today.setDate(today.getDate() + 5));
-		return deliveryDate.toLocaleDateString(); 
+		return deliveryDate.toLocaleDateString();
 	};
-	
+
 	const handleAddAddress = () => {
 		if (address.trim()) {
 			dispatch(addAddress(address));
@@ -40,13 +40,13 @@ const Order = () => {
 			setIsAddressSaved(true); // Update state to show address is saved
 		}
 	};
-	
+
 	const handleEditAddress = () => {
 		setAddress(''); // Clear the address field for new input
 		setIsAddressSaved(false); // Mark address as unsaved
 		localStorage.removeItem('shippingAddress'); // Remove address from local storage
 	};
-	
+
 	return (
 		<div className="w-[90%] font-lato mx-auto">
 			<div className="flex w-[100%] flex-wrap justify-center gap-20 p-8">
@@ -67,7 +67,7 @@ const Order = () => {
 												src={`http://localhost:5000/${item.productUrl}`}
 												alt={item.name}
 												className="w-20 h-auto object-cover mb-4 rounded"
-												/>
+											/>
 											<h2 className="text-xl font-lato pb-3 font-bold">Product: {item.name}</h2>
 											<p>Price: ₹{item.price}</p>
 											<p>Quantity: {item.quantity}</p>
@@ -90,11 +90,11 @@ const Order = () => {
 						placeholder="Enter delivery address..."
 						className="w-full p-2 border rounded mb-4"
 						disabled={isAddressSaved} // Disable field if an address is present
-						/>
+					/>
 					{!isAddressSaved && (
 						<button
-						onClick={handleAddAddress} // Save the address on button click
-						className="bg-green-500 text-white font-bold px-4 py-2 rounded hover:bg-green-700"
+							onClick={handleAddAddress} // Save the address on button click
+							className="bg-green-500 text-white font-bold px-4 py-2 rounded hover:bg-green-700"
 						>
 							Save Address
 						</button>
@@ -111,7 +111,7 @@ const Order = () => {
 							<button
 								onClick={handleEditAddress}
 								className="flex items-center mt-4 text-blue-500 hover:underline"
-								>
+							>
 								<FaPlusCircle className="mr-2" />
 								Edit Address
 							</button>
