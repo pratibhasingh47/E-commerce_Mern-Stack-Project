@@ -5,6 +5,7 @@ const connectDb = require("./config/db");
 const gloablErrorHandler = require("./middleware/globalErrorHandler");
 const authRoutes = require("./router/auth");
 const productRoutes = require("./router/product");
+const orderRoutes = require("./router/address");
 const passport = require("passport");
 const session = require("express-session");
 const path = require("path");
@@ -33,6 +34,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 app.use("/auth", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api", productRoutes);
+app.use("/auth", orderRoutes);
 
 
 app.use(gloablErrorHandler);

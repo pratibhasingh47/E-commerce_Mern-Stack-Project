@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { clearCart, incrementQuantity, decrementQuantity } from '../../redux/slices/cartSlice'; // Assuming increment and decrement actions exist
+import { clearCart, incrementQuantity, decrementQuantity } from '../../redux/slices/cartSlice'; 
+import {useNavigate} from 'react-router-dom';
 
 const Cart = () => {
     const dispatch = useDispatch();
@@ -13,8 +14,14 @@ const Cart = () => {
 
     const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
+    const navigate = useNavigate(); 
+
     const handleClearCart = () => {
         dispatch(clearCart());
+    };
+
+    const handleBuyNow = () => {
+        navigate('/order');
     };
 
     return (
@@ -87,7 +94,7 @@ const Cart = () => {
                         ))}
                     </ul>
                     <p className="text-lg font-bold">Total Price: {totalPrice}</p>
-                    <button className="bg-orange-500 text-white font-lato font-bold px-4 py-2 mt-4 w-full  hover:bg-blue-600">
+                    <button  onClick={handleBuyNow} className="bg-orange-500 text-white font-lato font-bold px-4 py-2 mt-4 w-full  hover:bg-blue-600">
                         Buy Now
                     </button>
                 </div>
