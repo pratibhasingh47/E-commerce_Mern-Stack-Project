@@ -12,7 +12,7 @@ const addressSchema = new mongoose.Schema({
         required: true,
         ref: 'User',
     },
-    userEmail: { 
+    userEmail: {
         type: String,
         required: true,
         trim: true,
@@ -24,3 +24,4 @@ const addressSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Address', addressSchema);
+    

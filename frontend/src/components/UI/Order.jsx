@@ -88,7 +88,8 @@ const Order = () => {
 						value={address}
 						onChange={(e) => setAddress(e.target.value)} // Update state on change
 						placeholder="Enter delivery address..."
-						className="w-full p-2 border rounded mb-4"
+						// className="w-full text-black p-2 border rounded mb-4"
+						className={` w-full text-black p-2 border rounded mb-4 ${theme === 'dark' ? ' text-white' : 'text-black'}`}
 						disabled={isAddressSaved} // Disable field if an address is present
 					/>
 					{!isAddressSaved && (
@@ -113,7 +114,7 @@ const Order = () => {
 								className="flex items-center mt-4 text-blue-500 hover:underline"
 							>
 								<FaPlusCircle className="mr-2" />
-								Edit Address
+								Add Address
 							</button>
 						</div>
 					)}
