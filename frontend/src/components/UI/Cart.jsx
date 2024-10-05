@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearCart, incrementQuantity, decrementQuantity } from '../../redux/slices/cartSlice'; 
 import {useNavigate} from 'react-router-dom';
@@ -9,12 +9,23 @@ const Cart = () => {
 
     const theme = useSelector((state) => state.theme?.theme);
 
+    const isAuth = useSelector((state) => state.auth?.isAuth);
+
+    const navigate = useNavigate(); 
+
+    useEffect(() => {
+		if (!isAuth) {
+			navigate('/login'); 
+		}
+	}, [isAuth, navigate]);
+
+    
+
 
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
 
     const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
-    const navigate = useNavigate(); 
 
     const handleClearCart = () => {
         dispatch(clearCart());

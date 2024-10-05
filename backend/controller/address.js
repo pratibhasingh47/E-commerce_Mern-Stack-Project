@@ -1,6 +1,6 @@
 const Address = require('../model/address');
 
-const addAddress = async (req, res) => {
+exports.addAddress = async (req, res) => {
     try {
         const { address } = req.body;
         const userId = req.user._id;  
@@ -27,4 +27,3 @@ const addAddress = async (req, res) => {
     }
 };
 
-module.exports = { addAddress };

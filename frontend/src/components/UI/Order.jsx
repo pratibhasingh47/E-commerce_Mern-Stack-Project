@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addAddress } from '../../redux/slices/address';
-import { FaPlusCircle } from 'react-icons/fa'; // Importing an icon for the button
+import { FaPlusCircle } from 'react-icons/fa'; 
 
 const Order = () => {
 	const dispatch = useDispatch();
@@ -9,10 +9,11 @@ const Order = () => {
 	const addressState = useSelector((state) => state.address);
 
 	const theme = useSelector((state) => state.theme?.theme);
+	
 
 
 	const [address, setAddress] = useState('');
-	const [isAddressSaved, setIsAddressSaved] = useState(false); // New state to track if address is saved
+	const [isAddressSaved, setIsAddressSaved] = useState(false); 
 
 
 	useEffect(() => {
@@ -26,7 +27,7 @@ const Order = () => {
 	const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
 	const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
-	// Calculate expected delivery date (5 days ahead)
+	
 	const getExpectedDeliveryDate = () => {
 		const today = new Date();
 		const deliveryDate = new Date(today.setDate(today.getDate() + 5));
@@ -36,15 +37,15 @@ const Order = () => {
 	const handleAddAddress = () => {
 		if (address.trim()) {
 			dispatch(addAddress(address));
-			localStorage.setItem('shippingAddress', address); // Save address to local storage
-			setIsAddressSaved(true); // Update state to show address is saved
+			localStorage.setItem('shippingAddress', address);
+			setIsAddressSaved(true); 
 		}
 	};
 
 	const handleEditAddress = () => {
-		setAddress(''); // Clear the address field for new input
-		setIsAddressSaved(false); // Mark address as unsaved
-		localStorage.removeItem('shippingAddress'); // Remove address from local storage
+		setAddress(''); 
+		setIsAddressSaved(false); 
+		localStorage.removeItem('shippingAddress'); 
 	};
 
 	return (
@@ -86,15 +87,15 @@ const Order = () => {
 					<input
 						type="text"
 						value={address}
-						onChange={(e) => setAddress(e.target.value)} // Update state on change
+						onChange={(e) => setAddress(e.target.value)} 
 						placeholder="Enter delivery address..."
 						// className="w-full text-black p-2 border rounded mb-4"
-						className={` w-full text-black p-2 border rounded mb-4 ${theme === 'dark' ? ' text-white' : 'text-black'}`}
-						disabled={isAddressSaved} // Disable field if an address is present
+						className={` w-full text-black p-2 border rounded mb-4 ${theme === 'dark' ? ' text-black' : 'text-black'}`}
+						disabled={isAddressSaved} 
 					/>
 					{!isAddressSaved && (
 						<button
-							onClick={handleAddAddress} // Save the address on button click
+							onClick={handleAddAddress}
 							className="bg-green-500 text-white font-bold px-4 py-2 rounded hover:bg-green-700"
 						>
 							Save Address

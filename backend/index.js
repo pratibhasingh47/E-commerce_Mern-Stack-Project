@@ -6,6 +6,7 @@ const gloablErrorHandler = require("./middleware/globalErrorHandler");
 const authRoutes = require("./router/auth");
 const productRoutes = require("./router/product");
 const orderRoutes = require("./router/address");
+const cartRoutes = require('./router/cart')
 const passport = require("passport");
 const session = require("express-session");
 const path = require("path");
@@ -35,6 +36,7 @@ app.use("/auth", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api", productRoutes);
 app.use("/auth", orderRoutes);
+app.use("/api",cartRoutes);
 
 
 app.use(gloablErrorHandler);
