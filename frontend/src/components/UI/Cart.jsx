@@ -19,8 +19,6 @@ const Cart = () => {
 		}
 	}, [isAuth, navigate]);
 
-    
-
 
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
 
