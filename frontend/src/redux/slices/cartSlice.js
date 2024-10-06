@@ -332,8 +332,8 @@ export const addToCartAsync = createAsyncThunk(
                     name: item.name,
                     price: item.price,
                     productUrl: item.productUrl,
-                    description : item.description,
-                    category : item.category,
+                    description: item.description,
+                    category: item.category,
                 },
                 {
                     headers: {
