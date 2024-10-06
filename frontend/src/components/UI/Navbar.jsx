@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { FiLogOut } from "react-icons/fi";
@@ -23,19 +23,20 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import Badge from '@mui/material/Badge';
 import { AiFillCaretDown } from "react-icons/ai";
-
+import { clearCart } from '../../redux/slices/cartSlice';
 
 
 
 const Navbar = () => {
     const { isAuth, role } = useSelector((state) => state.auth);
     const theme = useSelector((state) => state.theme?.theme);
-    const { cartItem } = useSelector((state) => state.cart);
+    const cartItem = useSelector((state) => state.cart.cartItem);
 
     const dispatch = useDispatch();
 
     const handleLogOut = () => {
         dispatch(logOut());
+        dispatch(clearCart());
     }
 
     const handleThemeToggle = () => {
@@ -48,7 +49,10 @@ const Navbar = () => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-
+    useEffect(() => {
+        // Log cart items to check if they update correctly
+        console.log('Current cart items:', cartItem);
+    }, [cartItem]);
     const categories = [
         { name: 'Beauty', route: '/beauty' },
         { name: 'Home & Furniture', route: '/home&Kitchen' },

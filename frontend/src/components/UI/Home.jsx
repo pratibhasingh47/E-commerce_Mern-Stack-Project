@@ -1,70 +1,70 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { getAllProduct } from '../../redux/slices/productSlice'
-import { addToCart } from '../../redux/slices/cartSlice'
-import Footer from './Footer'
-import Carousel from './Carousel'
+// import React, { useEffect, useState } from 'react'
+// import { useDispatch, useSelector } from 'react-redux'
+// import { getAllProduct } from '../../redux/slices/productSlice'
+// import { addToCartAsync } from '../../redux/slices/cartSlice'
+// import Footer from './Footer'
+// import Carousel from './Carousel'
 
-const Home = () => {
-	const { products } = useSelector((state) => state.product);
-	const dispatch = useDispatch();
+// const Home = () => {
+// 	const { products } = useSelector((state) => state.product);
+// 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		dispatch(getAllProduct());
-	}, [dispatch]);
+// 	useEffect(() => {
+// 		dispatch(getAllProduct());
+// 	}, [dispatch]);
 
-	const handleAddCart = (data) => {
-		dispatch(addToCart(data));
-	}
+// 	const handleAddCart = (data) => {
+// 		dispatch(addToCartAsync(data));
+// 	}
 
-	// Group products by category
-	const groupedProducts = products.reduce((acc, product) => {
-		const { category } = product;
-		if (!acc[category]) {
-			acc[category] = [];
-		}
-		acc[category].push(product);
-		return acc;
-	}, {});
+// 	// Group products by category
+// 	const groupedProducts = products.reduce((acc, product) => {
+// 		const { category } = product;
+// 		if (!acc[category]) {
+// 			acc[category] = [];
+// 		}
+// 		acc[category].push(product);
+// 		return acc;
+// 	}, {});
 
-	return (
-		<div>
-			<Carousel />
-			<div className='w-[90%] mx-auto'>
+// 	return (
+// 		<div>
+// 			<Carousel />
+// 			<div className='w-[90%] mx-auto'>
 
-				{Object.keys(groupedProducts).map((category, index) => (
-					<div key={index} className='mt-10'>
-						<h2 className='text-3xl font-bold font-lato text-left'>{category}</h2>
-						<div className='grid grid-cols-5 gap-8 font-sans mt-4'>
-							{groupedProducts[category].map((item, i) => (
-								<div key={i} className='p-4 flex flex-col items-center w-auto h-[100%] justify-center bg-white rounded'>
-									<img src={`http://localhost:5000/${item.productUrl}`} className='object-contain bg-contain w-4/5 h-4/5' alt={item.name} />
-									<div className='flex justify-between w-[100%] px-4 items-center'>
-										<div className='mt-5'>
-											<p className='text-sm text-black w-44 py-1'>{item.name}</p>
-											<p className='text-sm text-black py-1'>₹{item.price}</p>
-										</div>
-										<div className='mt-5'>
-											<button
-												className='p-2 text-black border border-black text-xs hover:bg-black hover:text-white'
-												onClick={() => handleAddCart(item)}
-											>
-												Add to cart
-											</button>
-										</div>
-									</div>
-								</div>
-							))}
-						</div>
-					</div>
-				))}
-			</div>
-			<Footer />
-		</div>
-	);
-}
+// 				{Object.keys(groupedProducts).map((category, index) => (
+// 					<div key={index} className='mt-10'>
+// 						<h2 className='text-3xl font-bold font-lato text-left'>{category}</h2>
+// 						<div className='grid grid-cols-5 gap-8 font-sans mt-4'>
+// 							{groupedProducts[category].map((item, i) => (
+// 								<div key={i} className='p-4 flex flex-col items-center w-auto h-[100%] justify-center bg-white rounded'>
+// 									<img src={`http://localhost:5000/${item.productUrl}`} className='object-contain bg-contain w-4/5 h-4/5' alt={item.name} />
+// 									<div className='flex justify-between w-[100%] px-4 items-center'>
+// 										<div className='mt-5'>
+// 											<p className='text-sm text-black w-44 py-1'>{item.name}</p>
+// 											<p className='text-sm text-black py-1'>₹{item.price}</p>
+// 										</div>
+// 										<div className='mt-5'>
+// 											<button
+// 												className='p-2 text-black border border-black text-xs hover:bg-black hover:text-white'
+// 												onClick={() => handleAddCart(item)}
+// 											>
+// 												Add to cart
+// 											</button>
+// 										</div>
+// 									</div>
+// 								</div>
+// 							))}
+// 						</div>
+// 					</div>
+// 				))}
+// 			</div>
+// 			<Footer />
+// 		</div>
+// 	);
+// }
 
-export default Home;
+// export default Home;
 
 
 
@@ -119,3 +119,101 @@ export default Home;
 // }
 
 // export default Home
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllProduct } from '../../redux/slices/productSlice';
+import { addToCartAsync, fetchCartAsync } from '../../redux/slices/cartSlice';
+import Footer from './Footer';
+import Carousel from './Carousel';
+
+const Home = () => {
+	const { products } = useSelector((state) => state.product);
+	const isAuth = useSelector((state) => state.auth.isAuth);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(getAllProduct());
+	}, [dispatch]);
+
+	useEffect(()=>{
+		if(isAuth){
+			dispatch(fetchCartAsync);
+		}
+	},[dispatch , isAuth]);
+
+	const handleAddCart = (item) => {
+		// Create a new cart item object
+		const cartItem = {
+			productId: item._id, // Use the correct ID from your item object
+			name: item.name,
+			quantity: 1, // Default quantity for adding to cart
+			price: item.price,
+			productUrl: item.productUrl,
+			description : item.description,
+			category : item.category
+		};
+		dispatch(addToCartAsync(cartItem));
+		console.log(cartItem.productId); // Dispatch the action
+	};
+
+	// Group products by category
+	const groupedProducts = products.reduce((acc, product) => {
+		const { category } = product;
+		if (!acc[category]) {
+			acc[category] = [];
+		}
+		acc[category].push(product);
+		return acc;
+	}, {});
+
+	return (
+		<div>
+			<Carousel />
+			<div className='w-[90%] mx-auto'>
+				{Object.keys(groupedProducts).map((category, index) => (
+					<div key={index} className='mt-10'>
+						<h2 className='text-3xl font-bold font-lato text-left'>{category}</h2>
+						<div className='grid grid-cols-5 gap-8 font-sans mt-4'>
+							{groupedProducts[category].map((item, i) => (
+								<div key={i} className='p-4 flex flex-col items-center w-auto h-[100%] justify-center bg-white rounded'>
+									<img src={`http://localhost:5000/${item.productUrl}`} className='object-contain bg-contain w-4/5 h-4/5' alt={item.name} />
+									<div className='flex justify-between w-[100%] px-4 items-center'>
+										<div className='mt-5'>
+											<p className='text-sm text-black w-44 py-1'>{item.name}</p>
+											<p className='text-sm text-black py-1'>₹{item.price}</p>
+										</div>
+										<div className='mt-5'>
+											<button
+												className='p-2 text-black border border-black text-xs hover:bg-black hover:text-white'
+												onClick={() => handleAddCart(item)}
+											>
+												Add to cart
+											</button>
+										</div>
+									</div>
+								</div>
+							))}
+						</div>
+					</div>
+				))}
+			</div>
+			<Footer />
+		</div>
+	);
+};
+
+export default Home;
