@@ -1,4 +1,4 @@
-import React , {useEffect} from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearCart, incrementQuantity, decrementQuantity } from '../../redux/slices/cartSlice'; 
 import {useNavigate} from 'react-router-dom';
@@ -9,21 +9,12 @@ const Cart = () => {
 
     const theme = useSelector((state) => state.theme?.theme);
 
-    const isAuth = useSelector((state) => state.auth?.isAuth);
-
-    const navigate = useNavigate(); 
-
-    useEffect(() => {
-		if (!isAuth) {
-			navigate('/login'); 
-		}
-	}, [isAuth, navigate]);
-
 
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
 
     const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
+    const navigate = useNavigate(); 
 
     const handleClearCart = () => {
         dispatch(clearCart());
@@ -56,7 +47,7 @@ const Cart = () => {
                                                 className="w-20 h-auto object-cover mb-4 rounded"
                                             />
                                             <h2 className="text-xl font-lato pb-3 font-bold"><strong>Product Name :</strong> {item.name}</h2>
-                                            <p><strong>Price:</strong> {item.price}</p>
+                                            <p><strong>Price:</strong> ₹{item.price}</p>
                                             <p><strong>Description:</strong> {item.description}</p>
                                             <p><strong>Category:</strong> {item.category}</p>
                                         </div>
@@ -98,11 +89,11 @@ const Cart = () => {
                         {cartItems.map((item, index) => (
                             <li key={index} className="flex justify-between mb-2">
                                 <span>{item.name} ({item.quantity})</span>
-                                <span>{item.price * item.quantity}</span>
+                                <span>₹{item.price * item.quantity}</span>
                             </li>
                         ))}
                     </ul>
-                    <p className="text-lg font-bold">Total Price: {totalPrice}</p>
+                    <p className="text-lg font-bold">Total Price: ₹{totalPrice}</p>
                     <button  onClick={handleBuyNow} className="bg-orange-500 text-white font-lato font-bold px-4 py-2 mt-4 w-full  hover:bg-blue-600">
                         Buy Now
                     </button>

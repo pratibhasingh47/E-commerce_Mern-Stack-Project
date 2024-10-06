@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const cartSchema = new Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // Required only when user is logged in
     items: [
         {
             productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
