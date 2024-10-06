@@ -149,11 +149,11 @@ const Home = () => {
 		dispatch(getAllProduct());
 	}, [dispatch]);
 
-	useEffect(()=>{
-		if(isAuth){
+	useEffect(() => {
+		if (isAuth) {
 			dispatch(fetchCartAsync);
 		}
-	},[dispatch , isAuth]);
+	}, [dispatch, isAuth]);
 
 	const handleAddCart = (item) => {
 		// Create a new cart item object
@@ -163,8 +163,8 @@ const Home = () => {
 			quantity: 1, // Default quantity for adding to cart
 			price: item.price,
 			productUrl: item.productUrl,
-			description : item.description,
-			category : item.category
+			description: item.description,
+			category: item.category
 		};
 		dispatch(addToCartAsync(cartItem));
 		console.log(cartItem.productId); // Dispatch the action
