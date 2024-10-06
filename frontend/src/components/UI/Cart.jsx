@@ -127,9 +127,9 @@
 
 
 
-import React , {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { clearCart, incrementQuantity, decrementQuantity , fetchCartAsync} from '../../redux/slices/cartSlice'; 
+import { clearCart, incrementQuantity, decrementQuantity, fetchCartAsync } from '../../redux/slices/cartSlice';
 import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
@@ -140,8 +140,8 @@ const Cart = () => {
 
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
     const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-    
-    const navigate = useNavigate(); 
+
+    const navigate = useNavigate();
 
     const handleClearCart = () => {
         dispatch(clearCart());
