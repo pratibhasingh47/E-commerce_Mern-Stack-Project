@@ -74,7 +74,7 @@ const getCartItems = async (req, res) => {
         // If the cart exists, map over the items to include product 
         // console.log(cart.items);
         const cartItems = cart.items.map((item) => ({
-            
+
             productId: item.productId,
             name: item.name,
             price: item.price,
@@ -138,7 +138,7 @@ const getCartItems = async (req, res) => {
 
 const addToCart = async (req, res) => {
     const userId = req.userId;
-    const { productId, quantity, name, price, productUrl, operation , description , category } = req.body; // Destructure necessary fields
+    const { productId, quantity, name, price, productUrl, operation, description, category } = req.body; // Destructure necessary fields
     // console.log(req.body);
     // Validate required fields
     if (!userId || !productId || !name || !price || !productUrl) {
@@ -155,7 +155,7 @@ const addToCart = async (req, res) => {
 
         // Check if the product already exists in the cart
         const existingItemIndex = cart.items.findIndex(item => item.productId.toString() === productId);
-        
+
         if (existingItemIndex > -1) {
             // Update the quantity of the existing item
             if (operation === 'increment') {
@@ -197,4 +197,4 @@ const addToCart = async (req, res) => {
 
 
 
-module.exports = { getCartItems , addToCart };
+module.exports = { getCartItems, addToCart };
