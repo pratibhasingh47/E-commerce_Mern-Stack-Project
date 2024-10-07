@@ -52,7 +52,7 @@ const Login = () => {
             dispatch(fetchCartAsync());
             navigate("/");
         }
-    }, [isAuth , dispatch , navigate]);
+    }, [isAuth, dispatch, navigate]);
 
 
     return (

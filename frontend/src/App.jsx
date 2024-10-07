@@ -31,7 +31,6 @@
 
 
 
-
 import React, { useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import Router from './router/router';
@@ -41,35 +40,35 @@ import { fetchCartAsync } from './redux/slices/cartSlice'; // import your thunk 
 import '@fontsource/inter';
 
 const ThemeHandler = () => {
-    const theme = useSelector((state) => state.theme?.theme); // Add optional chaining to prevent undefined access
+	const theme = useSelector((state) => state.theme?.theme); // Add optional chaining to prevent undefined access
 
-    useEffect(() => {
-        document.body.className = theme === 'dark' ? 'dark-theme' : 'light-theme';
-    }, [theme]);
+	useEffect(() => {
+		document.body.className = theme === 'dark' ? 'dark-theme' : 'light-theme';
+	}, [theme]);
 
-    return null;
+	return null;
 };
 
 // Move the logic for dispatching `fetchCartAsync` into a component
 const CartFetcher = () => {
-    const dispatch = useDispatch();
-    const isAuth = useSelector((state) => state.auth.isAuth);
+	const dispatch = useDispatch();
+	const isAuth = useSelector((state) => state.auth.isAuth);
 
-    useEffect(() => {
-        dispatch(fetchCartAsync());
-    }, [dispatch, isAuth]);
+	useEffect(() => {
+		dispatch(fetchCartAsync());
+	}, [dispatch, isAuth]);
 
-    return null;
+	return null;
 };
 
 function App() {
-    return (
-        <Provider store={store}>
-            <ThemeHandler />
-            <CartFetcher /> {/* This will handle the cart fetching logic */}
-            <RouterProvider router={Router} />
-        </Provider>
-    );
+	return (
+		<Provider store={store}>
+			<ThemeHandler />
+			<CartFetcher /> {/* This will handle the cart fetching logic */}
+			<RouterProvider router={Router} />
+		</Provider>
+	);
 }
 
 export default App;
