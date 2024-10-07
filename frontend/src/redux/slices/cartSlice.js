@@ -211,12 +211,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// Helper function to persist cart to localStorage
+
 const saveCartToLocalStorage = (cart) => {
     localStorage.setItem("cart", JSON.stringify(cart));
 };
 
-// Helper function to get cart from localStorage
+
 const getCartFromLocalStorage = () => {
     return JSON.parse(localStorage.getItem("cart")) || [];
 };
@@ -233,11 +233,10 @@ export const fetchCartAsync = createAsyncThunk(
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                // Store the fetched cart items in localStorage for later use
+
                 localStorage.setItem('cartItems', JSON.stringify(response.data.items));
                 return response.data.items;
             } else {
-                // If not authenticated, get the cart from localStorage
                 return getCartFromLocalStorage();
             }
         } catch (error) {
@@ -307,22 +306,22 @@ export const addToCartAsync = createAsyncThunk(
     async (item, { getState, rejectWithValue }) => {
         const { auth } = getState();
         try {
-            // Guest user handling with localStorage
+
             if (!auth.isAuth) {
                 const updatedCart = [...getCartFromLocalStorage()];
                 const existingItem = updatedCart.find(cartItem => cartItem.productId === item.productId);
 
                 if (existingItem) {
-                    existingItem.quantity += item.quantity; // Increment quantity
+                    existingItem.quantity += item.quantity;
                 } else {
-                    updatedCart.push({ ...item, quantity: item.quantity }); // Add new item
+                    updatedCart.push({ ...item, quantity: item.quantity });
                 }
 
                 saveCartToLocalStorage(updatedCart);
                 return updatedCart;
             }
 
-            // Logged-in user handling
+
             const token = localStorage.getItem("token");
             const response = await axios.post(
                 "http://localhost:5000/api/cart/add",
@@ -341,7 +340,7 @@ export const addToCartAsync = createAsyncThunk(
                     },
                 }
             );
-            return response.data.cart.items; // Assuming your API returns the updated cart
+            return response.data.cart.items;
         } catch (error) {
             return rejectWithValue("Failed to add/update item in cart.");
         }
@@ -377,10 +376,10 @@ const cartSlice = createSlice({
         },
         clearCart: (state) => {
             state.cartItem = [];
-            saveCartToLocalStorage([]);
+            localStorage.removeItem("cartItem");
         },
         resetCart: (state) => {
-            state.cartItem = [];
+            state.cartItem = getCartFromLocalStorage();
         }
     },
     extraReducers: (builder) => {
@@ -399,11 +398,11 @@ const cartSlice = createSlice({
 
         // Add/update to cart
         builder.addCase(addToCartAsync.fulfilled, (state, action) => {
-            state.cartItem = action.payload; // Set the updated cart
-            saveCartToLocalStorage(state.cartItem); // Save to localStorage after backend sync
+            state.cartItem = action.payload;
+            saveCartToLocalStorage(state.cartItem);
         });
         builder.addCase(addToCartAsync.rejected, (state, action) => {
-            state.error = action.payload; // Handle error case
+            state.error = action.payload;
         });
     },
 });

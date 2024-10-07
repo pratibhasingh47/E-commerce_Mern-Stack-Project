@@ -36,11 +36,11 @@ import { RouterProvider } from 'react-router-dom';
 import Router from './router/router';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import store from './redux/store/store';
-import { fetchCartAsync } from './redux/slices/cartSlice'; // import your thunk for fetching the cart
+import { fetchCartAsync } from './redux/slices/cartSlice'; 
 import '@fontsource/inter';
 
 const ThemeHandler = () => {
-	const theme = useSelector((state) => state.theme?.theme); // Add optional chaining to prevent undefined access
+	const theme = useSelector((state) => state.theme?.theme); 
 
 	useEffect(() => {
 		document.body.className = theme === 'dark' ? 'dark-theme' : 'light-theme';
@@ -49,7 +49,7 @@ const ThemeHandler = () => {
 	return null;
 };
 
-// Move the logic for dispatching `fetchCartAsync` into a component
+
 const CartFetcher = () => {
 	const dispatch = useDispatch();
 	const isAuth = useSelector((state) => state.auth.isAuth);
@@ -65,7 +65,7 @@ function App() {
 	return (
 		<Provider store={store}>
 			<ThemeHandler />
-			<CartFetcher /> {/* This will handle the cart fetching logic */}
+			<CartFetcher /> 
 			<RouterProvider router={Router} />
 		</Provider>
 	);
