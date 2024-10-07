@@ -340,7 +340,7 @@ const Profile = () => {
                                     name="country"
                                     value={formData.country}
                                     onChange={handleChange}
-                                    disabled // Disable field when not editing
+                                    disabled={!isEditing}  // Disable field when not editing
                                     className="p-2 rounded border bg-gray-100 text-black cursor-not-allowed"
                                 />
                             ) : (
@@ -370,7 +370,7 @@ const Profile = () => {
                                     name="state"
                                     value={formData.state}
                                     onChange={handleChange}
-                                    disabled // Disable field when not editing
+                                    disabled={!isEditing || states.length === 0}  // Disable field when not editing
                                     className="p-2 rounded border bg-gray-100 text-black cursor-not-allowed"
                                 />
                             ) : (
@@ -400,7 +400,7 @@ const Profile = () => {
                                     name="city"
                                     value={formData.city}
                                     onChange={handleChange}
-                                    disabled // Disable field when not editing
+                                    disabled ={!isEditing || cities.length === 0} // Disable field when not editing
                                     className="p-2 rounded border bg-gray-100 text-black cursor-not-allowed"
                                 />
                             ) : (
