@@ -9,6 +9,7 @@ import loginpng from '../../assets/login.png';
 import '../css/Signup-Login.css';
 import { FcGoogle } from "react-icons/fc";
 import shop from '../../assets/Shop.jpg';
+import { fetchCartAsync } from '../../redux/slices/cartSlice';
 
 
 const Login = () => {
@@ -48,9 +49,10 @@ const Login = () => {
 
     useEffect(() => {
         if (isAuth) {
+            dispatch(fetchCartAsync());
             navigate("/");
         }
-    }, [isAuth]);
+    }, [isAuth , dispatch , navigate]);
 
 
     return (
