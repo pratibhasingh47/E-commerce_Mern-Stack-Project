@@ -72,7 +72,7 @@ const getCartItems = async (req, res) => {
         }
 
         // If the cart exists, map over the items to include product 
-        // console.log(cart.items);
+        console.log(cart.items);
         const cartItems = cart.items.map((item) => ({
 
             productId: item.productId,
@@ -139,7 +139,7 @@ const getCartItems = async (req, res) => {
 const addToCart = async (req, res) => {
     const userId = req.userId;
     const { productId, quantity, name, price, productUrl, operation, description, category } = req.body; // Destructure necessary fields
-    // console.log(req.body);
+    console.log(req.body);
     // Validate required fields
     if (!userId || !productId || !name || !price || !productUrl) {
         return res.status(400).json({ message: "User ID, Product ID, name, price, and productUrl are required." });

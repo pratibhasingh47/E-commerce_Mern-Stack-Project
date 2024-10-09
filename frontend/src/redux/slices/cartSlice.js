@@ -235,6 +235,7 @@ export const fetchCartAsync = createAsyncThunk(
                 });
 
                 localStorage.setItem('cartItems', JSON.stringify(response.data.items));
+                // console.log(response.data.items);
                 return response.data.items;
             } else {
                 return getCartFromLocalStorage();
