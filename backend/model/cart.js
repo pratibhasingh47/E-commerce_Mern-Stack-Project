@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const Item = require('./item');
 
-// Updated CartItemSchema to include product details
+
 const CartItemSchema = new mongoose.Schema({
     productId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product', // Assuming you have an Item model
+        ref: 'Product', 
         required: true
     },
     name: {
@@ -24,11 +24,11 @@ const CartItemSchema = new mongoose.Schema({
         type: Number,
         default: 1
     },
-    description: { // Add description here
+    description: { 
         type: String,
         required: true
     },
-    category: { // Add category here
+    category: { 
         type: String,
         required: true
     }
@@ -37,7 +37,7 @@ const CartItemSchema = new mongoose.Schema({
 const CartSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', // Assuming you have a User model
+        ref: 'User', 
         required: true
     },
     items: [CartItemSchema]
