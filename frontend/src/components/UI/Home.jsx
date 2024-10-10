@@ -156,7 +156,6 @@ const Home = () => {
 	}, [dispatch, isAuth]);
 
 	const handleAddCart = (item) => {
-		// Create a new cart item object
 		const cartItem = {
 			productId: item, 
 			name: item.name,

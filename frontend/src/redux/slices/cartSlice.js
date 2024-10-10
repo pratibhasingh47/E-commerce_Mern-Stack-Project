@@ -388,7 +388,7 @@ const cartSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        // Fetch cart
+        
         builder.addCase(fetchCartAsync.pending, (state) => {
             state.isLoading = true;
         });
@@ -401,7 +401,7 @@ const cartSlice = createSlice({
             state.error = action.payload;
         });
 
-        // Add/update to cart
+        
         builder.addCase(addToCartAsync.fulfilled, (state, action) => {
             state.cartItem = action.payload;
             saveCartToLocalStorage(state.cartItem);

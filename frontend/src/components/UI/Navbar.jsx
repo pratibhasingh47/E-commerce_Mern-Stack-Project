@@ -50,7 +50,6 @@ const Navbar = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     useEffect(() => {
-        // Log cart items to check if they update correctly
         console.log('Current cart items:', cartItem);
     }, [cartItem]);
     const categories = [
