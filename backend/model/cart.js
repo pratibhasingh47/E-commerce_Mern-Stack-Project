@@ -5,7 +5,7 @@ const Item = require('./item');
 const CartItemSchema = new mongoose.Schema({
     productId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Item', // Assuming you have an Item model
+        ref: 'Product', // Assuming you have an Item model
         required: true
     },
     name: {

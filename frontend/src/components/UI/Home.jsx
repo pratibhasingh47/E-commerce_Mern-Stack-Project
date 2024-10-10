@@ -158,16 +158,16 @@ const Home = () => {
 	const handleAddCart = (item) => {
 		// Create a new cart item object
 		const cartItem = {
-			productId: item._id, // Use the correct ID from your item object
+			productId: item, 
 			name: item.name,
-			quantity: 1, // Default quantity for adding to cart
+			quantity: 1, 
 			price: item.price,
-			productUrl: item.productUrl,
+			productUrl: item.productUrl,	
 			description: item.description,
 			category: item.category
 		};
 		dispatch(addToCartAsync(cartItem));
-		console.log(cartItem.productId); // Dispatch the action
+		console.log(cartItem.productId); 
 	};
 
 	// Group products by category

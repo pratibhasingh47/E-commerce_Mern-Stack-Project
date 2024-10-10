@@ -310,8 +310,10 @@ export const addToCartAsync = createAsyncThunk(
 
             if (!auth.isAuth) {
                 const updatedCart = [...getCartFromLocalStorage()];
-                const existingItem = updatedCart.find(cartItem => cartItem.productId === item.productId);
-
+                console.log(updatedCart)
+                console.log(item)
+                const existingItem = updatedCart.find(cartItem => cartItem.productId._id === item.productId._id);
+                console.log(existingItem)
                 if (existingItem) {
                     existingItem.quantity += item.quantity;
                 } else {
@@ -358,7 +360,9 @@ const cartSlice = createSlice({
     reducers: {
         incrementQuantity: (state, action) => {
             const productId = action.payload;
-            const item = state.cartItem.find(cartItem => cartItem.productId === productId);
+            console.log(productId._id)
+            const item = state.cartItem.find(cartItem => cartItem.productId._id === productId._id);
+            console.log(item)
             if (item) {
                 item.quantity += 1;
                 saveCartToLocalStorage(state.cartItem);
@@ -377,7 +381,7 @@ const cartSlice = createSlice({
         },
         clearCart: (state) => {
             state.cartItem = [];
-            localStorage.removeItem("cartItem");
+            localStorage.removeItem("cartItems");
         },
         resetCart: (state) => {
             state.cartItem = getCartFromLocalStorage();

@@ -145,6 +145,9 @@ const Cart = () => {
     const navigate = useNavigate();
 
     const handleClearCart = () => {
+        if (!isAuth) {
+            localStorage.removeItem("cart")
+        }
         dispatch(clearCart());
     };
 
