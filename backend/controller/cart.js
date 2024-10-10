@@ -140,38 +140,35 @@ const addToCart = async (req, res) => {
     const userId = req.userId;
     const { productId, quantity, name, price, productUrl, operation, description, category } = req.body; // Destructure necessary fields
     console.log(req.body);
-    // Validate required fields
+
     if (!userId || !productId || !name || !price || !productUrl) {
         return res.status(400).json({ message: "User ID, Product ID, name, price, and productUrl are required." });
     }
 
     try {
-        // Find the user's cart or create one if it doesn't exist
+
         let cart = await Cart.findOne({ userId: userId });
         if (!cart) {
-            // Create a new cart for the user
             cart = new Cart({ userId: userId, items: [] });
         }
 
-        // Check if the product already exists in the cart
         const existingItemIndex = cart.items.findIndex(item => item.productId.toString() === productId);
 
         if (existingItemIndex > -1) {
-            // Update the quantity of the existing item
+            
             if (operation === 'increment') {
-                cart.items[existingItemIndex].quantity += quantity; // Increment the quantity
+                cart.items[existingItemIndex].quantity += quantity; 
             } else if (operation === 'decrement') {
-                // Decrement the quantity but ensure it doesn't go below 0
+                
                 if (cart.items[existingItemIndex].quantity > 0) {
-                    cart.items[existingItemIndex].quantity -= quantity; // Decrement the quantity
-                    // Optionally remove the item if the quantity is zero
+                    cart.items[existingItemIndex].quantity -= quantity; 
+
                     if (cart.items[existingItemIndex].quantity === 0) {
-                        cart.items.splice(existingItemIndex, 1); // Remove item if quantity is 0
+                        cart.items.splice(existingItemIndex, 1); 
                     }
                 }
             }
         } else {
-            // Add new item to cart only if operation is not decrement
             if (operation !== 'decrement') {
                 const newItem = {
                     productId,
@@ -182,11 +179,11 @@ const addToCart = async (req, res) => {
                     category,
                     description
                 };
-                cart.items.push(newItem); // Add the new item
+                cart.items.push(newItem); 
             }
         }
 
-        // Save the updated cart
+        
         await cart.save();
         res.status(200).json({ message: "Cart updated successfully", cart });
     } catch (error) {
