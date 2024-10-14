@@ -370,12 +370,12 @@ const cartSlice = createSlice({
         },
         decrementQuantity: (state, action) => {
             const productId = action.payload;
-            const item = state.cartItem.find(cartItem => cartItem.productId === productId);
+            const item = state.cartItem.find(cartItem => cartItem.productId._id === productId._id);
             if (item && item.quantity > 1) {
                 item.quantity -= 1;
                 saveCartToLocalStorage(state.cartItem);
             } else {
-                state.cartItem = state.cartItem.filter(cartItem => cartItem.productId !== productId);
+                state.cartItem = state.cartItem.filter(cartItem => cartItem.productId._id !== productId._id);
                 saveCartToLocalStorage(state.cartItem);
             }
         },

@@ -15,6 +15,8 @@ import AdminOrder from '../components/UI/AdminOrder'
 import Profile from '../components/UI/Profile'
 import OpenRoutes from '../components/UI/OpenRoutes'
 import GoogleAuth from '../components/UI/GoogleAuth'
+import SuccessPayment from '../components/UI/SuccessPayment';
+import CancelPayment from '../components/UI/CancelPayment';
 
 
 const Router = createBrowserRouter([
@@ -27,7 +29,20 @@ const Router = createBrowserRouter([
         {
             path: "/cart",
             element: <Cart />
-        },]
+        },
+        {
+            path: "/googleauth",
+            element: <GoogleAuth />
+        },
+        {
+            path: "/paymentsuccess",
+            element: <SuccessPayment />
+        },
+        {
+            path: "/cancelPayment",
+            element: <CancelPayment />
+        },
+        ]
     },
     {
         element: <UnProtected />,
@@ -39,10 +54,6 @@ const Router = createBrowserRouter([
             {
                 path: "/Signup",
                 element: <Signup />
-            },
-            {
-                path: "/googleauth",
-                element: <GoogleAuth/>
             },
         ]
     },
