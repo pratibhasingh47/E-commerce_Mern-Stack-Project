@@ -294,7 +294,6 @@ const Order = () => {
 	const [address, setAddress] = useState('');
 	const [isAddressSaved, setIsAddressSaved] = useState(false);
 
-	// Keep the saved address from localStorage
 	useEffect(() => {
 		const savedAddress = localStorage.getItem('shippingAddress');
 		if (savedAddress) {
@@ -303,18 +302,17 @@ const Order = () => {
 		}
 	}, []);
 
-	// Calculate total items and price
 	const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
 	const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
-	// Get the expected delivery date (5 days from today)
+
 	const getExpectedDeliveryDate = () => {
 		const today = new Date();
 		const deliveryDate = new Date(today.setDate(today.getDate() + 5));
 		return deliveryDate.toLocaleDateString();
 	};
 
-	// Handle adding a new address
+
 	const handleAddAddress = () => {
 		if (address.trim()) {
 			dispatch(addAddress(address));
@@ -323,14 +321,13 @@ const Order = () => {
 		}
 	};
 
-	// Handle editing an existing address
+
 	const handleEditAddress = () => {
 		setAddress('');
 		setIsAddressSaved(false);
 		localStorage.removeItem('shippingAddress');
 	};
 
-	// Handle the form submission for payment
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		// if (!user || !user.id) {
