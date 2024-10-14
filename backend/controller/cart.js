@@ -155,16 +155,16 @@ const addToCart = async (req, res) => {
         const existingItemIndex = cart.items.findIndex(item => item.productId.toString() === productId);
 
         if (existingItemIndex > -1) {
-            
+
             if (operation === 'increment') {
-                cart.items[existingItemIndex].quantity += quantity; 
+                cart.items[existingItemIndex].quantity += quantity;
             } else if (operation === 'decrement') {
-                
+
                 if (cart.items[existingItemIndex].quantity > 0) {
-                    cart.items[existingItemIndex].quantity -= quantity; 
+                    cart.items[existingItemIndex].quantity -= quantity;
 
                     if (cart.items[existingItemIndex].quantity === 0) {
-                        cart.items.splice(existingItemIndex, 1); 
+                        cart.items.splice(existingItemIndex, 1);
                     }
                 }
             }
@@ -179,11 +179,11 @@ const addToCart = async (req, res) => {
                     category,
                     description
                 };
-                cart.items.push(newItem); 
+                cart.items.push(newItem);
             }
         }
 
-        
+
         await cart.save();
         res.status(200).json({ message: "Cart updated successfully", cart });
     } catch (error) {
