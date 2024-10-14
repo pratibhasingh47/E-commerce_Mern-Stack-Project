@@ -87,9 +87,9 @@ const getRole = () => {
     return null;
 }
 
-const getUser = ()=>{
+const getUser = () => {
     const token = localStorage.getItem("token");
-    if(token){
+    if (token) {
         const decodedToken = jwtDecode(token);
         return decodedToken
     }
@@ -102,7 +102,7 @@ const initialState = {
     error: null,
     isAuth: localStorage.getItem("token") ? true : false,
     role: getRole(),
-    token : localStorage.getItem("token"),
+    token: localStorage.getItem("token"),
     users: [],
 }
 
@@ -169,7 +169,7 @@ const authSlice = createSlice({
             })
             .addCase(updateUser.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.user = action.payload; 
+                state.user = action.payload;
             })
             .addCase(updateUser.rejected, (state, action) => {
                 state.isLoading = false;
