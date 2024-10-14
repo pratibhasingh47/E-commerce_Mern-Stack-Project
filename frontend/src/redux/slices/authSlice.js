@@ -87,12 +87,22 @@ const getRole = () => {
     return null;
 }
 
+const getUser = ()=>{
+    const token = localStorage.getItem("token");
+    if(token){
+        const decodedToken = jwtDecode(token);
+        return decodedToken
+    }
+    return null
+}
+
 const initialState = {
     isLoading: false,
-    user: null,
+    user: getUser(),
     error: null,
     isAuth: localStorage.getItem("token") ? true : false,
     role: getRole(),
+    token : localStorage.getItem("token"),
     users: [],
 }
 
@@ -159,7 +169,7 @@ const authSlice = createSlice({
             })
             .addCase(updateUser.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.user = action.payload; // Update the user state with the updated profile
+                state.user = action.payload; 
             })
             .addCase(updateUser.rejected, (state, action) => {
                 state.isLoading = false;
